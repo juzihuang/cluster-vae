@@ -5,6 +5,7 @@ from libs.dataset_utils import create_input_pipeline
 from libs.datasets import CELEB, MNIST
 from libs.batch_norm import batch_norm
 from libs import utils
+from libs.vae import VAE, train_vae
 
 # %%
 def test_sita():

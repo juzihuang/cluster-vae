@@ -1,11 +1,11 @@
 import tensorflow as tf
 import numpy as np
 import os
+import libs
 from libs.dataset_utils import create_input_pipeline
 from libs.datasets import CELEB, MNIST
 from libs.batch_norm import batch_norm
-from libs import utils
-
+from libs.vae import VAE, train_vae
 # %%
 def test_celeb(n_epochs=50):
     """Train an autoencoder on Celeb Net.
@@ -20,6 +20,7 @@ def test_celeb(n_epochs=50):
         crop_factor=0.8,
         convolutional=True,
         variational=True,
+        clustered=True,
         n_filters=[100, 100, 100],
         n_hidden=250,
         n_code=100,
