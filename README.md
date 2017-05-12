@@ -44,14 +44,10 @@ CUDA_VISIBLE_DEVICES=3 python3 test_mnist_clvae.py
 ```
 It will be something like this:
 
-<html>
-<body>
-
-<p>GPU status:</p>
-<img src="readme_images/GPU_utilization.png" alt="Samples for reconstruction" style="width:520px;">
-
-</body>
-</html>
+<p>Samples for reconstruction and the reconstructed results:</p>
+<table><tr>
+<td><img src=readme_images/GPU_utilization.png border=0></td>
+</tr></table>
 
 ## Results
 
@@ -61,50 +57,36 @@ Make folders for storing result by:
 ```
 ### MNIST
 #### VAE
-<html>
-<body>
 
 <p>Samples for reconstruction and the reconstructed results:</p>
-<img src="readme_images/mnist_vae_test.png" alt="Samples for reconstruction" style="width:256px;height:256px;">
+<table><tr>
+<td><img src=readme_images/mnist_vae_test.png border=0></td>
+<td><img src=readme_images/mnist_vae_1800.png border=0></td>
+</tr></table>
 
-<img src="readme_images/mnist_vae_1800.png" alt="Initial Results" style="width:256px;height:256px;">
-
-</body>
-</html>
 
 #### cluster VAE
-<html>
-<body>
 
 <p>Samples for reconstruction and the reconstructed results:</p>
-<img src="readme_images/mnist_clvae_test.png" alt="Samples for reconstruction" style="width:256px;height:256px;">
+<table><tr>
+<td><img src=readme_images/mnist_clvae_test.png border=0></td>
+<td><img src=readme_images/mnist_clvae_1800.png border=0></td>
+</tr></table>
 
-<img src="readme_images/mnist_clvae_1800.png" alt="Initial Results" style="width:256px;height:256px;">
-
-</body>
-</html>
 
 ### Sita
 #### VAE
-<html>
-<body>
 
 <p>Samples for reconstruction and the reconstructed results:</p>
-<img src="readme_images/sita_vae_test.png" alt="Samples for reconstruction" style="width:256px;height:256px;">
-
-<img src="readme_images/sita_vae_110.png" alt="Initial Results" style="width:256px;height:256px;">
-
-</body>
-</html>
+<table><tr>
+<td><img src=readme_images/sita_vae_test.png border=0></td>
+<td><img src=readme_images/sita_vae_110.png border=0></td>
+</tr></table>
 
 #### cluster VAE
-<html>
-<body>
 
 <p>Samples for reconstruction and the reconstructed results:</p>
-<img src="readme_images/sita_clvae_test.png" alt="Samples for reconstruction" style="width:256px;height:256px;">
-
-<img src="readme_images/sita_clvae_110.png" alt="Initial Results" style="width:256px;height:256px;">
-
-</body>
-</html>
+<table><tr>
+<td><img src=readme_images/sita_clvae_test.png border=0></td>
+<td><img src=readme_images/sita_clvae_110.png border=0></td>
+</tr></table>
