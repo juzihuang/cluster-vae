@@ -46,7 +46,7 @@ It will be something like this:
 
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
-<td><img src=readme_images/GPU_utilization.png border=0></td>
+<td><img src="readme_images/GPU_utilization.png" alt="HTML tutorial" style="width:520px;border:0;"></td>
 </tr></table>
 
 ## Results
@@ -60,8 +60,8 @@ Make folders for storing result by:
 
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
-<td><img src=readme_images/mnist_vae_test.png border=0></td>
-<td><img src=readme_images/mnist_vae_1800.png border=0></td>
+<td><img src="readme_images/mnist_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_vae_1800.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 
@@ -69,8 +69,8 @@ Make folders for storing result by:
 
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
-<td><img src=readme_images/mnist_clvae_test.png border=0></td>
-<td><img src=readme_images/mnist_clvae_1800.png border=0></td>
+<td><img src="readme_images/mnist_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_clvae_1800.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 
@@ -79,14 +79,14 @@ Make folders for storing result by:
 
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
-<td><img src=readme_images/sita_vae_test.png border=0></td>
-<td><img src=readme_images/sita_vae_110.png border=0></td>
+<td><img src="readme_images/sita_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/sita_vae_110.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 #### cluster VAE
 
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
-<td><img src=readme_images/sita_clvae_test.png border=0></td>
-<td><img src=readme_images/sita_clvae_110.png border=0></td>
+<td><img src="readme_images/sita_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/sita_clvae_110.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
