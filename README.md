@@ -43,7 +43,7 @@ and
 CUDA_VISIBLE_DEVICES=3 python3 test_mnist_clvae.py
 ```
 It will be something like this:
-![](readme_images/GPU_utilization.png)
+![GPU status](readme_images/GPU_utilization.png)
 
 ## Results
 
