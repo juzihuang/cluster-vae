@@ -369,7 +369,9 @@ def train_vae(files,
     optimizer = tf.train.AdamOptimizer(
         learning_rate=learning_rate).minimize(ae['cost'])
 
-    # We create a session to use the graph
+    # We create a session to use the config = tf.ConfigProto()
+    config = tf.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.45
     sess = tf.Session()
     saver = tf.train.Saver()
     sess.run(tf.global_variables_initializer())
