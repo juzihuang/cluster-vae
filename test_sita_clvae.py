@@ -35,7 +35,7 @@ def test_sita():
         filter_sizes=[3, 3, 3],
         activation=tf.nn.sigmoid,
         ckpt_name='./sita.ckpt',
-        output_path="result_sita")
+        output_path="result_sita_clvae")
 
 
 if __name__ == '__main__':
