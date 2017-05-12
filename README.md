@@ -53,30 +53,38 @@ Make folders for storing result by:
 ```
 ### MNIST
 #### VAE
-samples for reconstruction
+samples for reconstruction:
+
 ![samples for reconstruction](readme_images/mnist_vae_test.png)
 
-Initial Results
+Initial Results:
+
 ![Initial Results](readme_images/mnist_vae_1800.png)
 
 #### cluster VAE
-samples for reconstruction
+samples for reconstruction:
+
 ![samples for reconstruction](readme_images/mnist_clvae_test.png)
 
-Initial Results
+Initial Results:
+
 ![Initial Results](readme_images/mnist_clvae_1800.png)
 
 ### Sita
 #### VAE
-samples for reconstruction
+samples for reconstruction:
+
 ![samples for reconstruction](readme_images/sita_vae_test.png)
 
-Initial Results
+Initial Results:
+
 ![Initial Results](readme_images/sita_vae_110.png)
 
 #### cluster VAE
-samples for reconstruction
+samples for reconstruction:
+
 ![samples for reconstruction](readme_images/sita_clvae_test.png)
 
-Initial Results
+Initial Results:
+
 ![Initial Results](readme_images/sita_clvae_110.png)
