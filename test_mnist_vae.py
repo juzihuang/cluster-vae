@@ -28,7 +28,7 @@ def test_mnist(n_epochs=100):
     ae = VAE(input_shape=[None, 784], n_filters=[512, 256],
              n_hidden=64, n_code=n_code, n_clusters=n_clusters,
              activation=tf.nn.sigmoid,
-             convolutional=True,
+             convolutional=False,
              variational=True,
              clustered=False)
 
