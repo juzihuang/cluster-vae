@@ -16,7 +16,7 @@ def test_mnist(n_epochs=100):
     the latent space of the inner most dimension of the encoder,
     as well as reconstructions of the decoder.
     """
-    output_path = "result_mnist"
+    output_path = "result_mnist_clvae"
     # load MNIST
     n_code = 2
     n_clusters = 12
@@ -28,7 +28,7 @@ def test_mnist(n_epochs=100):
     ae = VAE(input_shape=[None, 784], n_filters=[512, 256],
              n_hidden=64, n_code=n_code, n_clusters=n_clusters,
              activation=tf.nn.sigmoid,
-             convolutional=False,
+             convolutional=True,
              variational=True,
              clustered=True)
 

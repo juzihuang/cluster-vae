@@ -1,8 +1,11 @@
 # Clustered VAE
-<p class="lead">
-VAE with clustered latent space designed by Yida Wang
+<p class="lead">BSD 3-Clause License
+
+Copyright (c) 2017, Yida Wang
+All rights reserved.
 </p>
 
+VAE with clustered latent space designed by Yida Wang.
 There is also a notebook useful for understanding the basic VAE definition based on Tensorflow through the notebook. I personably ever took a deep learning course on Kadenze CADL repo on Github.
 
 ## Clustering methods
@@ -23,7 +26,7 @@ sudo chmod a+r /usr/lib/x86_64-linux-gnu/libcudnn*
 ```
 Those steps works on my Ubuntu 16.04 station with 4 Nvidia 1080 GPUs
 
-2. Volatile GPU-Util problem: it might be all 0%, so you could have a try on using them seperately by:
+2. Volatile GPU-Util problem: it might be all 0%, so you could have a try on Celeb video using them seperately by:
 ```sh
 CUDA_VISIBLE_DEVICES=0 python3 test_sita_vae.py
 ```
@@ -31,5 +34,15 @@ and
 ```sh
 CUDA_VISIBLE_DEVICES=1 python3 test_sita_clvae.py
 ```
+or on MNIST:
+```sh
+CUDA_VISIBLE_DEVICES=2 python3 test_mnist_vae.py
+```
+and
+```sh
+CUDA_VISIBLE_DEVICES=3 python3 test_mnist_clvae.py
+```
 It will be something like this:
 ![](readme_images/GPU_utilization.png)
+
+## Results
