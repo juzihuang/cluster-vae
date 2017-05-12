@@ -25,5 +25,11 @@ Those steps works on my Ubuntu 16.04 station with 4 Nvidia 1080 GPUs
 
 2. Volatile GPU-Util problem: it might be all 0%, so you could have a try on using them seperately by:
 ```sh
-CUDA_VISIBLE_DEVICES=0 python3 test_sita.py
+CUDA_VISIBLE_DEVICES=0 python3 test_sita_vae.py
 ```
+and
+```sh
+CUDA_VISIBLE_DEVICES=1 python3 test_sita_clvae.py
+```
+It will be something like this:
+![](readme_images/GPU_utilization.png)
