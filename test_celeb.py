@@ -27,7 +27,8 @@ def test_celeb(n_epochs=50):
         dropout=True,
         filter_sizes=[3, 3, 3],
         activation=tf.nn.sigmoid,
-        ckpt_name='./celeb.ckpt')
+        ckpt_name='./celeb.ckpt',
+        output_path="result_celeb")
 
 
 if __name__ == '__main__':

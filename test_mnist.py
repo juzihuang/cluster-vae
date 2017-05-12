@@ -16,7 +16,7 @@ def test_mnist(n_epochs=100):
     the latent space of the inner most dimension of the encoder,
     as well as reconstructions of the decoder.
     """
-
+    output_path = "result_mnist"
     # load MNIST
     n_code = 2
     n_clusters = 12
@@ -50,7 +50,7 @@ def test_mnist(n_epochs=100):
     batch_i = 0
     batch_size = 200
     test_xs = mnist.test.images[:n_examples]
-    utils.montage(test_xs.reshape((-1, 28, 28)), 'test_xs.png')
+    utils.montage(test_xs.reshape((-1, 28, 28)), output_path + '/test_xs.png')
     for epoch_i in range(n_epochs):
         train_i = 0
         train_cost = 0
@@ -78,7 +78,7 @@ def test_mnist(n_epochs=100):
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
                 m = utils.montage(recon.reshape((-1, 28, 28)),
-                    'manifold_%08d.png' % t_i)
+                    output_path + '/manifold_%08d.png' % t_i)
                 # Plot example reconstructions
                 recon = sess.run(
                     ae['y'], feed_dict={ae['x']: test_xs,
@@ -86,7 +86,7 @@ def test_mnist(n_epochs=100):
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})
                 m = utils.montage(recon.reshape(
-                    (-1, 28, 28)), 'reconstruction_%08d.png' % t_i)
+                    (-1, 28, 28)), output_path + '/reconstruction_%08d.png' % t_i)
                 t_i += 1
             batch_i += 1
 

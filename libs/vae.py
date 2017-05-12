@@ -284,6 +284,7 @@ def train_vae(files,
               activation=tf.nn.relu,
               img_step=100,
               save_step=100,
+              output_path="result",
               ckpt_name="vae.ckpt"):
     """General purpose training of a (Variational) (Convolutional) Autoencoder.
 
@@ -382,7 +383,7 @@ def train_vae(files,
     # Start up the queues for handling the image pipeline
     threads = tf.train.start_queue_runners(sess=sess, coord=coord)
 
-    if os.path.exists(ckpt_name + '.index') or os.path.exists(ckpt_name):
+    if os.path.exists(output_path + '/' + ckpt_name + '.index') or os.path.exists(ckpt_name):
         saver.restore(sess, ckpt_name)
 
     # Fit all training data
@@ -392,7 +393,7 @@ def train_vae(files,
     cost = 0
     n_files = len(files)
     test_xs = sess.run(batch) / 255.0
-    utils.montage(test_xs, 'test_xs.png')
+    utils.montage(test_xs, output_path + '/test_xs.png')
     try:
         # initial centers for Kmeans
         old_cent = np.random.uniform(
@@ -433,7 +434,7 @@ def train_vae(files,
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
                 utils.montage(recon.reshape([-1] + crop_shape),
-                              'manifold_%08d.png' % t_i)
+                              output_path + '/manifold_%08d.png' % t_i)
 
                 # Plot example reconstructions
                 recon = sess.run(
@@ -444,12 +445,12 @@ def train_vae(files,
                 print('reconstruction (min, max, mean):',
                     recon.min(), recon.max(), recon.mean())
                 utils.montage(recon.reshape([-1] + crop_shape),
-                              'reconstruction_%08d.png' % t_i)
+                              output_path+'/reconstruction_%08d.png' % t_i)
                 t_i += 1
 
             if batch_i % save_step == 0:
                 # Save the variables to disk.
-                saver.save(sess, "./" + ckpt_name,
+                saver.save(sess, output_path + "/" + ckpt_name,
                            global_step=batch_i,
                            write_meta_graph=False)
     except tf.errors.OutOfRangeError:
@@ -464,151 +465,3 @@ def train_vae(files,
 
     # Clean up the session.
     sess.close()
-
-
-# %%
-def test_mnist(n_epochs=100):
-    """Train an autoencoder on MNIST.
-
-    This function will train an autoencoder on MNIST and also
-    save many image files during the training process, demonstrating
-    the latent space of the inner most dimension of the encoder,
-    as well as reconstructions of the decoder.
-    """
-
-    # load MNIST
-    n_code = 2
-    n_clusters = 12
-    mnist = MNIST(split=[0.8, 0.1, 0.1])
-    # initial centers for Kmeans
-    old_cent = np.random.uniform(
-        -1.0, 1.0, [n_clusters, n_code]).astype(np.float32)
-    # End
-    ae = VAE(input_shape=[None, 784], n_filters=[512, 256],
-             n_hidden=64, n_code=n_code, n_clusters=n_clusters,
-             activation=tf.nn.sigmoid,
-             convolutional=False,
-             variational=True,
-             clustered=True)
-
-    n_examples = 100
-    zs = np.random.uniform(
-        -1.0, 1.0, [4, n_code]).astype(np.float32)
-    zs = utils.make_latent_manifold(zs, n_examples)
-
-    learning_rate = 0.02
-    optimizer = tf.train.AdamOptimizer(
-        learning_rate=learning_rate).minimize(ae['cost'])
-
-    # We create a session to use the graph
-    sess = tf.Session()
-    sess.run(tf.global_variables_initializer())
-
-    # Fit all training data
-    t_i = 0
-    batch_i = 0
-    batch_size = 200
-    test_xs = mnist.test.images[:n_examples]
-    utils.montage(test_xs.reshape((-1, 28, 28)), 'test_xs.png')
-    for epoch_i in range(n_epochs):
-        train_i = 0
-        train_cost = 0
-        for batch_xs, _ in mnist.train.next_batch(batch_size):
-            train_cost += sess.run([ae['cost'], optimizer], feed_dict={
-                ae['x']: batch_xs, ae['train']: True, ae['keep_prob']: 1.0,
-                ae['old_cent']: old_cent})[0]
-
-            # Get new centroids
-            old_cent = sess.run(
-                ae['new_cent'], feed_dict={ae['x']: test_xs,
-                                    ae['train']: False,
-                                    ae['keep_prob']: 1.0,
-                                    ae['old_cent']: old_cent})
-            # To fix: I don't know why there are nan in cent
-            old_cent = np.nan_to_num(old_cent)
-
-            train_i += 1
-            if batch_i % 10 == 0:
-                # Plot example reconstructions from latent layer
-                recon = sess.run(
-                    ae['y'], feed_dict={
-                        ae['z']: zs,
-                        ae['train']: False,
-                        ae['keep_prob']: 1.0,
-                        ae['old_cent']: old_cent})
-                m = utils.montage(recon.reshape((-1, 28, 28)),
-                    'manifold_%08d.png' % t_i)
-                # Plot example reconstructions
-                recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs,
-                                        ae['train']: False,
-                                        ae['keep_prob']: 1.0,
-                                        ae['old_cent']: old_cent})
-                m = utils.montage(recon.reshape(
-                    (-1, 28, 28)), 'reconstruction_%08d.png' % t_i)
-                t_i += 1
-            batch_i += 1
-
-        valid_i = 0
-        valid_cost = 0
-        for batch_xs, _ in mnist.valid.next_batch(batch_size):
-            valid_cost += sess.run([ae['cost']], feed_dict={
-                ae['x']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0,
-                ae['old_cent']: old_cent})[0]
-            valid_i += 1
-        print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
-
-
-def test_celeb(n_epochs=50):
-    """Train an autoencoder on Celeb Net.
-    """
-    files = CELEB()
-    train_vae(
-        files=files,
-        input_shape=[218, 178, 3],
-        batch_size=100,
-        n_epochs=n_epochs,
-        crop_shape=[64, 64, 3],
-        crop_factor=0.8,
-        convolutional=True,
-        variational=True,
-        n_filters=[100, 100, 100],
-        n_hidden=250,
-        n_code=100,
-        dropout=True,
-        filter_sizes=[3, 3, 3],
-        activation=tf.nn.sigmoid,
-        ckpt_name='./celeb.ckpt')
-
-
-def test_sita():
-    """Train an autoencoder on Sita Sings The Blues.
-    """
-    if not os.path.exists('sita'):
-        os.system('wget http://ossguy.com/sita/Sita_Sings_the_Blues_640x360_XviD.avi')
-        os.mkdir('sita')
-        os.system('ffmpeg -i Sita_Sings_the_Blues_640x360_XviD.avi -r 60 -f' +
-                  ' image2 -s 160x90 sita/sita-%08d.jpg')
-    files = [os.path.join('sita', f) for f in os.listdir('sita')]
-
-    train_vae(
-        files=files,
-        input_shape=[90, 160, 3],
-        batch_size=100,
-        n_epochs=50,
-        crop_shape=[90, 160, 3],
-        crop_factor=1.0,
-        convolutional=True,
-        variational=True,
-        clustered=True,
-        n_filters=[100, 100, 100],
-        n_hidden=250,
-        n_code=100,
-        dropout=True,
-        filter_sizes=[3, 3, 3],
-        activation=tf.nn.sigmoid,
-        ckpt_name='./sita.ckpt')
-
-
-if __name__ == '__main__':
-    test_sita()

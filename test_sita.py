@@ -12,7 +12,7 @@ def test_sita():
     """Train an autoencoder on Sita Sings The Blues.
     """
     if not os.path.exists('sita'):
-        os.system('wget http://ossguy.com/sita/Sita_Sings_the_Blues_640x360_XviD.avi')
+        os.system('wget -c http://ossguy.com/sita/Sita_Sings_the_Blues_640x360_XviD.avi')
         os.mkdir('sita')
         os.system('ffmpeg -i Sita_Sings_the_Blues_640x360_XviD.avi -r 60 -f' +
                   ' image2 -s 160x90 sita/sita-%08d.jpg')
@@ -34,7 +34,8 @@ def test_sita():
         dropout=True,
         filter_sizes=[3, 3, 3],
         activation=tf.nn.sigmoid,
-        ckpt_name='./sita.ckpt')
+        ckpt_name='./sita.ckpt',
+        output_path="result_celeb")
 
 
 if __name__ == '__main__':
