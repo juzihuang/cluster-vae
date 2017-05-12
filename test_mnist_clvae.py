@@ -41,8 +41,10 @@ def test_mnist(n_epochs=100):
     optimizer = tf.train.AdamOptimizer(
         learning_rate=learning_rate).minimize(ae['cost'])
 
-    # We create a session to use the graph
-    sess = tf.Session()
+    # We create a session to use the graph config = tf.ConfigProto()
+    config = tf.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.45
+    sess = tf.Session(config=config)
     sess.run(tf.global_variables_initializer())
 
     # Fit all training data
