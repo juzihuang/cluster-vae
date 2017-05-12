@@ -46,7 +46,7 @@ def create_input_pipeline(files, batch_size, n_epochs, shape, crop_shape=None,
     # It will generate the list of file names.
     # We also specify it's capacity beforehand.
     producer = tf.train.string_input_producer(
-        files, capacity=len(files))
+        files, capacity=len(files), shuffle=True, seed=1)
 
     # We need something which can open the files and read its contents.
     reader = tf.WholeFileReader()
@@ -96,7 +96,8 @@ def create_input_pipeline(files, batch_size, n_epochs, shape, crop_shape=None,
                                    batch_size=batch_size,
                                    capacity=capacity,
                                    min_after_dequeue=min_after_dequeue,
-                                   num_threads=n_threads)
+                                   num_threads=n_threads,
+                                   seed=1)
 
     # alternatively, we could use shuffle_batch_join to use multiple reader
     # instances, or set shuffle_batch's n_threads to higher than 1.
