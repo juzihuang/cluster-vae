@@ -80,7 +80,7 @@ Make folders for storing result by:
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
 <td><img src="readme_images/sita_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_vae_1350.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/sita_vae_4700.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 #### cluster VAE
@@ -88,5 +88,5 @@ Make folders for storing result by:
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
 <td><img src="readme_images/sita_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_clvae_1350.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/sita_clvae_4700.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
