@@ -83,6 +83,7 @@ def VAE(input_shape=[None, 784],
             'cost': Tensor to optimize.
             'Ws': All weights of the encoder.
             'x': Input Placeholder
+            't': Target Placeholder
             'z': Inner most encoding Tensor (latent features)
             'y': Reconstruction of the Decoder
             'centroids': Centers of the latent spaces
@@ -93,6 +94,7 @@ def VAE(input_shape=[None, 784],
     """
     # network input / placeholders for train (bn) and dropout
     x = tf.placeholder(tf.float32, input_shape, 'x')
+    t = tf.placeholder(tf.float32, input_shape, 't')
     old_cent = tf.placeholder(tf.float32, [n_clusters, n_code], 'old_cent')
     phase_train = tf.placeholder(tf.bool, name='phase_train')
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
@@ -231,11 +233,11 @@ def VAE(input_shape=[None, 784],
             current_input = h
 
     y = current_input
-    x_flat = utils.flatten(x)
+    t_flat = utils.flatten(t)
     y_flat = utils.flatten(y)
 
     # l2 loss
-    loss_x = tf.reduce_sum(tf.squared_difference(x_flat, y_flat), 1)
+    loss_t = tf.reduce_sum(tf.squared_difference(t_flat, y_flat), 1)
 
     if variational:
         # variational lower bound, kl-divergence
@@ -246,16 +248,16 @@ def VAE(input_shape=[None, 784],
             # kmeans cluster loss optimization for latent space of vae
             loss_c = distance_all
             # add l2 loss
-            cost = tf.reduce_mean(loss_x + loss_z + loss_c)
+            cost = tf.reduce_mean(loss_t + loss_z + loss_c)
         else:
             # add l2 loss
-            cost = tf.reduce_mean(loss_x + loss_z)
+            cost = tf.reduce_mean(loss_t + loss_z)
     else:
         # just optimize l2 loss
-        cost = tf.reduce_mean(loss_x)
+        cost = tf.reduce_mean(loss_t)
 
     return {'cost': cost, 'Ws': Ws,
-            'x': x, 'z': z, 'y': y,
+            'x': x, 't': t, 'z': z, 'y': y,
             'old_cent': old_cent,
             'new_cent': new_cent,
             'keep_prob': keep_prob,
@@ -285,7 +287,8 @@ def train_vae(files,
               img_step=100,
               save_step=100,
               output_path="result",
-              ckpt_name="vae.ckpt"):
+              ckpt_name="vae.ckpt",
+              input_type='file_list'):
     """General purpose training of a (Variational) (Convolutional) Autoencoder.
 
     Supply a list of file paths to images, and this will do everything else.
@@ -342,7 +345,8 @@ def train_vae(files,
         n_epochs=n_epochs,
         crop_shape=crop_shape,
         crop_factor=crop_factor,
-        shape=input_shape)
+        shape=input_shape,
+        input_type=input_type)
 
     ae = VAE(input_shape=[None] + crop_shape,
              convolutional=convolutional,
@@ -394,18 +398,33 @@ def train_vae(files,
     epoch_i = 0
     cost = 0
     n_files = len(files)
-    test_xs = sess.run(batch) / 255.0
-    utils.montage(test_xs, output_path + '/test_xs.png')
+
+    if input_type == 'file_list':
+        test_xs = sess.run(batch) / 255.0
+        utils.montage(test_xs, output_path + '/test_xs.png')
+    elif input_type == 'file_in_csv':
+        test_xs, test_ts, _ = sess.run(batch)
+        test_xs /= 255.0
+        test_ts /= 255.0
+        utils.montage(test_xs, output_path + '/test_xs.png')
+        utils.montage(test_ts, output_path + '/test_ts.png')
+
     try:
         # initial centers for Kmeans
         old_cent = np.random.uniform(
-            -1.0, 1.0, [12, n_code]).astype(np.float32)
+            -1.0, 1.0, [n_clusters, n_code]).astype(np.float32)
         # End
         while not coord.should_stop() and epoch_i < n_epochs:
             batch_i += 1
-            batch_xs = sess.run(batch) / 255.0
+            if input_type == 'file_list':
+                batch_xs = sess.run(batch) / 255.0
+                batch_ts = batch_xs
+            elif input_type == 'file_in_csv':
+                batch_xs, batch_ts, _ = sess.run(batch)
+                batch_xs /= 255.0
+                batch_ts /= 255.0
             train_cost = sess.run([ae['cost'], optimizer], feed_dict={
-                ae['x']: batch_xs, ae['train']: True,
+                ae['x']: batch_xs, ae['t']: batch_ts, ae['train']: True,
                 ae['keep_prob']: keep_prob,
                 ae['old_cent']: old_cent})[0]
             print(batch_i, train_cost)

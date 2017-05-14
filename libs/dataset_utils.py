@@ -14,7 +14,7 @@ from .utils import download_and_extract_tar
 
 
 def create_input_pipeline(files, batch_size, n_epochs, shape, crop_shape=None,
-                          crop_factor=1.0, n_threads=4):
+                          crop_factor=1.0, n_threads=4, seed=1, input_type='file_list'):
     """Creates a pipefile from a list of image files.
     Includes batch generator/central crop/resizing options.
     The resulting generator will dequeue the images batch_size at a time until
@@ -37,36 +37,13 @@ def create_input_pipeline(files, batch_size, n_epochs, shape, crop_shape=None,
         Percentage of image to take starting from center.
     n_threads : int, optional
         Number of threads to use for batch shuffling
+    seed : int, optional
+        Seed for generating batches.
+    type_input : string, optional
+        Input type for the fed data.
     """
 
-    # We first create a "producer" queue.  It creates a production line which
-    # will queue up the file names and allow another queue to deque the file
-    # names all using a tf queue runner.
-    # Put simply, this is the entry point of the computational graph.
-    # It will generate the list of file names.
-    # We also specify it's capacity beforehand.
-    producer = tf.train.string_input_producer(
-        files, capacity=len(files), shuffle=True, seed=1)
-
-    # We need something which can open the files and read its contents.
-    reader = tf.WholeFileReader()
-
-    # We pass the filenames to this object which can read the file's contents.
-    # This will create another queue running which dequeues the previous queue.
-    keys, vals = reader.read(producer)
-
-    # And then have to decode its contents as we know it is a jpeg image
-    imgs = tf.image.decode_jpeg(
-        vals,
-        channels=3 if len(shape) > 2 and shape[2] == 3 else 0)
-
-    # We have to explicitly define the shape of the tensor.
-    # This is because the decode_jpeg operation is still a node in the graph
-    # and doesn't yet know the shape of the image.  Future operations however
-    # need explicit knowledge of the image's shape in order to be created.
-    imgs.set_shape(shape)
-
-    # Next we'll centrally crop the image to the size of 100x100.
+    # We'll centrally crop the image to the size of 100x100.
     # This operation required explicit knowledge of the image's shape.
     if shape[0] > shape[1]:
         rsz_shape = [int(shape[0] / shape[1] * crop_shape[0] / crop_factor),
@@ -74,11 +51,77 @@ def create_input_pipeline(files, batch_size, n_epochs, shape, crop_shape=None,
     else:
         rsz_shape = [int(crop_shape[0] / crop_factor),
                      int(shape[1] / shape[0] * crop_shape[1] / crop_factor)]
-    rszs = tf.image.resize_images(imgs, rsz_shape)
-    crops = (tf.image.resize_image_with_crop_or_pad(
-        rszs, crop_shape[0], crop_shape[1])
-        if crop_shape is not None
-        else imgs)
+
+    # We first create a "producer" queue.  It creates a production line which
+    # will queue up the file names and allow another queue to deque the file
+    # names all using a tf queue runner.
+    # Put simply, this is the entry point of the computational graph.
+    # It will generate the list of file names.
+    # We also specify it's capacity beforehand.
+    if input_type == 'file_list':
+        producer = tf.train.string_input_producer(
+            files, capacity=len(files), shuffle=True, seed=seed)
+
+        # We need something which can open the files and read its contents.
+        reader = tf.WholeFileReader()
+
+        # We pass the filenames to this object which can read the file's contents.
+        # This will create another queue running which dequeues the previous queue.
+        keys, vals = reader.read(producer)
+
+        # And then have to decode its contents as we know it is a jpeg image
+        imgs = tf.image.decode_jpeg(
+            vals,
+            channels=3 if len(shape) > 2 and shape[2] == 3 else 0)
+
+        # We have to explicitly define the shape of the tensor.
+        # This is because the decode_jpeg operation is still a node in the graph
+        # and doesn't yet know the shape of the image.  Future operations however
+        # need explicit knowledge of the image's shape in order to be created.
+        imgs.set_shape(shape)
+
+        rszs = tf.image.resize_images(imgs, rsz_shape)
+        crops = (tf.image.resize_image_with_crop_or_pad(
+            rszs, crop_shape[0], crop_shape[1])
+            if crop_shape is not None
+            else imgs)
+
+    elif input_type == 'file_in_csv':
+        producer = tf.train.string_input_producer(
+            [files], shuffle=False, seed=seed)
+
+        # We need something which can read line by line.
+        reader = tf.TextLineReader()
+
+        # We pass the filenames to this object which can read the file's contents.
+        # This will create another queue running which dequeues the previous queue.
+        keys, vals = reader.read(producer)
+        record_defaults = [[""], [""], [1]]
+        src_path, tar_path, lable_temp = tf.decode_csv(
+            vals, record_defaults = record_defaults, field_delim=",")
+        label = tf.stack([lable_temp])
+        imgs_src = tf.image.decode_jpeg(tf.read_file(src_path),
+            channels=3 if len(shape) > 2 and shape[2] == 3 else 0)
+        imgs_tar = tf.image.decode_jpeg(tf.read_file(tar_path),
+            channels=3 if len(shape) > 2 and shape[2] == 3 else 0)
+
+        # We have to explicitly define the shape of the tensor.
+        # This is because the decode_jpeg operation is still a node in the graph
+        # and doesn't yet know the shape of the image.  Future operations however
+        # need explicit knowledge of the image's shape in order to be created.
+        imgs_src.set_shape(shape)
+        imgs_tar.set_shape(shape)
+
+        rszs_src = tf.image.resize_images(imgs_src, rsz_shape)
+        rszs_tar = tf.image.resize_images(imgs_tar, rsz_shape)
+        crops_src = (tf.image.resize_image_with_crop_or_pad(
+            rszs_src, crop_shape[0], crop_shape[1])
+            if crop_shape is not None
+            else imgs_src)
+        crops_tar = (tf.image.resize_image_with_crop_or_pad(
+            rszs_tar, crop_shape[0], crop_shape[1])
+            if crop_shape is not None
+            else imgs_tar)
 
     # Now we'll create a batch generator that will also shuffle our examples.
     # We tell it how many it should have in its buffer when it randomly
@@ -91,17 +134,28 @@ def create_input_pipeline(files, batch_size, n_epochs, shape, crop_shape=None,
     capacity = min_after_dequeue + (n_threads + 1) * batch_size
 
     # Randomize the order and output batches of batch_size.
-    batch = tf.train.shuffle_batch([crops],
-                                   enqueue_many=False,
-                                   batch_size=batch_size,
-                                   capacity=capacity,
-                                   min_after_dequeue=min_after_dequeue,
-                                   num_threads=n_threads,
-                                   seed=1)
-
     # alternatively, we could use shuffle_batch_join to use multiple reader
     # instances, or set shuffle_batch's n_threads to higher than 1.
+    if input_type == 'file_list':
+        batch = tf.train.shuffle_batch([crops],
+                                       enqueue_many=False,
+                                       batch_size=batch_size,
+                                       capacity=capacity,
+                                       min_after_dequeue=min_after_dequeue,
+                                       num_threads=n_threads,
+                                       seed=seed)
 
+    elif input_type == 'file_in_csv':
+        batch_src, batch_tar, batch_label = tf.train.shuffle_batch(
+                                       [crops_src, crops_tar, label],
+                                       enqueue_many=False,
+                                       batch_size=batch_size,
+                                       capacity=capacity,
+                                       min_after_dequeue=min_after_dequeue,
+                                       num_threads=n_threads,
+                                       seed=seed)
+
+        batch = [batch_src, batch_tar, batch_label]
     return batch
 
 
