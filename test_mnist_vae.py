@@ -31,10 +31,9 @@ def test_mnist(n_epochs=1000):
              n_code=n_code,
              n_clusters=n_clusters,
              activation=tf.nn.sigmoid,
-             convolutional=True,
+             convolutional=False,
              variational=True,
-             clustered=False,
-             filter_sizes=[3, 3])
+             clustered=False)
 
     n_examples = 100
     zs = np.random.uniform(
