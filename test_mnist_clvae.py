@@ -58,7 +58,7 @@ def test_mnist(n_epochs=100):
         train_cost = 0
         for batch_xs, _ in mnist.train.next_batch(batch_size):
             train_cost += sess.run([ae['cost'], optimizer], feed_dict={
-                ae['x']: batch_xs, ae['train']: True, ae['keep_prob']: 1.0,
+                ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: True, ae['keep_prob']: 1.0,
                 ae['old_cent']: old_cent})[0]
 
             # Get new centroids
