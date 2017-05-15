@@ -14,7 +14,7 @@ def test_shapenet():
     train_vae(
         files="./list_annotated_shapenet.csv",
         input_shape=[116, 116, 3],
-        batch_size=36,
+        batch_size=64,
         n_epochs=500,
         crop_shape=[112, 112, 3],
         crop_factor=1.0,
