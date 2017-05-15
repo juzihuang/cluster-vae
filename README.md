@@ -94,7 +94,7 @@ Make folders for storing result by:
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
 <td><img src="readme_images/mnist_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_vae_2799.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_vae_30000.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 
@@ -103,7 +103,7 @@ Make folders for storing result by:
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
 <td><img src="readme_images/mnist_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_clvae_2799.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_clvae_30000.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 
@@ -113,7 +113,7 @@ Make folders for storing result by:
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
 <td><img src="readme_images/sita_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_vae_4700.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/sita_vae_600.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 #### cluster VAE
@@ -121,5 +121,22 @@ Make folders for storing result by:
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table><tr>
 <td><img src="readme_images/sita_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_clvae_4700.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/sita_clvae_600.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+</tr></table>
+
+### ShapeNet
+#### VAE
+
+<p>Samples for reconstruction and the reconstructed results:</p>
+<table><tr>
+<td><img src="readme_images/shapenet_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/shapenet_vae_1500.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+</tr></table>
+
+#### cluster VAE
+
+<p>Samples for reconstruction and the reconstructed results:</p>
+<table><tr>
+<td><img src="readme_images/shapenet_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/shapenet_clvae_1500.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
