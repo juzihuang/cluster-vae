@@ -8,7 +8,7 @@ from libs import utils
 from libs.vae import VAE, train_vae
 
 # %%
-def test_mnist(n_epochs=100):
+def test_mnist(n_epochs=1000):
     """Train an autoencoder on MNIST.
 
     This function will train an autoencoder on MNIST and also
@@ -96,7 +96,7 @@ def test_mnist(n_epochs=100):
         valid_cost = 0
         for batch_xs, _ in mnist.valid.next_batch(batch_size):
             valid_cost += sess.run([ae['cost']], feed_dict={
-                ae['x']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0,
+                ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0,
                 ae['old_cent']: old_cent})[0]
             valid_i += 1
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
