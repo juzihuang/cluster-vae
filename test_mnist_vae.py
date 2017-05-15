@@ -34,7 +34,6 @@ def test_mnist(n_epochs=1000):
              convolutional=True,
              variational=True,
              clustered=False,
-             clustered=True,
              filter_sizes=[3, 3])
 
     n_examples = 100
