@@ -25,12 +25,17 @@ def test_mnist(n_epochs=1000):
     old_cent = np.random.uniform(
         -1.0, 1.0, [n_clusters, n_code]).astype(np.float32)
     # End
-    ae = VAE(input_shape=[None, 784], n_filters=[512, 256],
-             n_hidden=64, n_code=n_code, n_clusters=n_clusters,
+    ae = VAE(input_shape=[None, 784],
+             n_filters=[512, 256],
+             n_hidden=64,
+             n_code=n_code,
+             n_clusters=n_clusters,
              activation=tf.nn.sigmoid,
-             convolutional=False,
+             convolutional=True,
              variational=True,
-             clustered=False)
+             clustered=False,
+             clustered=True,
+             filter_sizes=[3, 3])
 
     n_examples = 100
     zs = np.random.uniform(
@@ -71,7 +76,7 @@ def test_mnist(n_epochs=1000):
             old_cent = np.nan_to_num(old_cent)
 
             train_i += 1
-            if batch_i % 10 == 0:
+            if batch_i % 1000 == 0:
                 # Plot example reconstructions from latent layer
                 recon = sess.run(
                     ae['y'], feed_dict={
