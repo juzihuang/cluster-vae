@@ -9,7 +9,7 @@ from libs import utils
 from libs.vae import VAE, train_vae
 
 # %%
-def test_mnist(n_epochs=1000,
+def test_mnist(n_epochs=50000,
             convolutional=False,
             variational=True,
             clustered=True,
@@ -46,7 +46,7 @@ def test_mnist(n_epochs=1000,
 
     # We create a session to use the graph config = tf.ConfigProto()
     config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.45
+    config.gpu_options.per_process_gpu_memory_fraction = 0.32
     sess = tf.Session(config=config)
     sess.run(tf.global_variables_initializer())
 

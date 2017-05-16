@@ -39,8 +39,8 @@ def test_sita():
     train_vae(
         files=files,
         input_shape=[90, 160, 3],
-        batch_size=100,
-        n_epochs=50,
+        batch_size=64,
+        n_epochs=5000,
         crop_shape=[90, 160, 3],
         crop_factor=1.0,
         convolutional=results.convolutional,

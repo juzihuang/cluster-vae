@@ -1,8 +1,14 @@
 ## Making directories for storing results
+mkdir result_mnist_clae
+mkdir result_mnist_ae
 mkdir result_mnist_clvae
 mkdir result_mnist_vae
+mkdir result_sita_clae
+mkdir result_sita_ae
 mkdir result_sita_clvae
 mkdir result_sita_vae
+mkdir result_shapenet_clae
+mkdir result_shapenet_ae
 mkdir result_shapenet_clvae
 mkdir result_shapenet_vae
 
