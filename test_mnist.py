@@ -93,7 +93,7 @@ def test_mnist(n_epochs=1000,
                     output_path + '/manifold_latest.png')
                 # Plot example reconstructions
                 recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs[:36],
+                    ae['y'], feed_dict={ae['x']: test_xs[:n_examples],
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})

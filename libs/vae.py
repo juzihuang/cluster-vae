@@ -267,7 +267,7 @@ def train_vae(files,
               learning_rate=0.0001,
               batch_size=100,
               n_epochs=50,
-              n_examples=64,
+              n_examples=36,
               crop_shape=[64, 64, 3],
               crop_factor=0.8,
               n_filters=[100, 100, 100, 100],
@@ -398,13 +398,13 @@ def train_vae(files,
 
     if input_type == 'file_list':
         test_xs = sess.run(batch) / 255.0
-        utils.montage(test_xs[:36], output_path + '/test_xs.png')
+        utils.montage(test_xs[:n_examples], output_path + '/test_xs.png')
     elif input_type == 'file_in_csv':
         test_xs, test_ts, _ = sess.run(batch)
         test_xs /= 255.0
         test_ts /= 255.0
-        utils.montage(test_xs[:36], output_path + '/test_xs.png')
-        utils.montage(test_ts[:36], output_path + '/test_ts.png')
+        utils.montage(test_xs[:n_examples], output_path + '/test_xs.png')
+        utils.montage(test_ts[:n_examples], output_path + '/test_ts.png')
 
     try:
         # initial centers for Kmeans
@@ -449,7 +449,7 @@ def train_vae(files,
                 # Plot example reconstructions from latent layer
                 recon = sess.run(
                     ae['y'], feed_dict={
-                        ae['z']: zs[:36],
+                        ae['z']: zs,
                         ae['train']: False,
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
@@ -460,7 +460,7 @@ def train_vae(files,
 
                 # Plot example reconstructions
                 recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs[:36],
+                    ae['y'], feed_dict={ae['x']: test_xs[:n_examples],
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})
