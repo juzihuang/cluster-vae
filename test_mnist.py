@@ -35,7 +35,7 @@ def test_mnist(n_epochs=1000,
              variational=variational,
              clustered=clustered)
 
-    n_examples = 64
+    n_examples = 36
     zs = np.random.uniform(
         -1.0, 1.0, [4, n_code]).astype(np.float32)
     zs = utils.make_latent_manifold(zs, n_examples)

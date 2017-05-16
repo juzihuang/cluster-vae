@@ -398,13 +398,13 @@ def train_vae(files,
 
     if input_type == 'file_list':
         test_xs = sess.run(batch) / 255.0
-        utils.montage(test_xs, output_path + '/test_xs.png')
+        utils.montage(test_xs[:36], output_path + '/test_xs.png')
     elif input_type == 'file_in_csv':
         test_xs, test_ts, _ = sess.run(batch)
         test_xs /= 255.0
         test_ts /= 255.0
-        utils.montage(test_xs, output_path + '/test_xs.png')
-        utils.montage(test_ts, output_path + '/test_ts.png')
+        utils.montage(test_xs[:36], output_path + '/test_xs.png')
+        utils.montage(test_ts[:36], output_path + '/test_ts.png')
 
     try:
         # initial centers for Kmeans
