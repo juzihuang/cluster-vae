@@ -32,8 +32,8 @@ def test_mnist(n_epochs=1000,
              n_clusters=n_clusters,
              activation=tf.nn.sigmoid,
              convolutional=convolutional,
-             variational=convolutional,
-             clustered=convolutional)
+             variational=variational,
+             clustered=clustered)
 
     n_examples = 64
     zs = np.random.uniform(
