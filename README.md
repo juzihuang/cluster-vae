@@ -26,26 +26,54 @@ sudo chmod a+r /usr/lib/x86_64-linux-gnu/libcudnn*
 ```
 Those steps works on my Ubuntu 16.04 station with 4 Nvidia 1080 GPUs
 
+We can have a check on the CUDA NVCC tools:
+```sh
+$ nvcc --version
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2015 NVIDIA Corporation
+Built on Tue_Aug_11_14:27:32_CDT_2015
+Cuda compilation tools, release 7.5, V7.5.17
+```
+
 2. Volatile GPU-Util problem: it might be all 0%, so you could have a try on Celeb video using them seperately by:
 ```sh
-CUDA_VISIBLE_DEVICES=0 python3 test_sita_vae.py
-```
-and
-```sh
-CUDA_VISIBLE_DEVICES=1 python3 test_sita_clvae.py
-```
-or on MNIST:
-```sh
-CUDA_VISIBLE_DEVICES=2 python3 test_mnist_vae.py
-```
-and
-```sh
-CUDA_VISIBLE_DEVICES=3 python3 test_mnist_clvae.py
+## Four tests on MNIST databse with variational/clustered without convolutional
+screen -r ae_mnist
+CUDA_VISIBLE_DEVICES=0 python3 test_mnist.py -o result_mnist_ae
+screen -d
+
+screen -r vae_mnist
+CUDA_VISIBLE_DEVICES=1 python3 test_mnist.py -v -o result_mnist_vae
+screen -d
+
+screen -r clae_mnist
+CUDA_VISIBLE_DEVICES=2 python3 test_mnist.py -k  -o result_mnist_clae
+screen -d
+
+screen -r clvae_mnist
+CUDA_VISIBLE_DEVICES=3 python3 test_mnist.py -v -k -o result_mnist_clvae
+screen -d
+
+## Four tests on ShapeNet databse with variational/clustered with convolutional
+screen -r ae_shapenet
+CUDA_VISIBLE_DEVICES=0 python3 test_shapenet.py -c -o result_shapenet_ae
+screen -d
+
+screen -r vae_shapenet
+CUDA_VISIBLE_DEVICES=1 python3 test_shapenet.py -c -v -o result_shapenet_vae
+screen -d
+
+screen -r clae_shapenet
+CUDA_VISIBLE_DEVICES=2 python3 test_shapenet.py -c -k -o result_shapenet_clae
+screen -d
+
+screen -r clvae_shapenet
+CUDA_VISIBLE_DEVICES=3 python3 test_shapenet.py -c -v -k -o result_shapenet_clvae
+screen -d
 ```
 It will be something like this:
 
 ```sh
-Tue May 16 12:23:58 2017
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
 |-------------------------------+----------------------+----------------------+
@@ -53,16 +81,16 @@ Tue May 16 12:23:58 2017
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
 |===============================+======================+======================|
 |   0  GeForce GTX 108...  Off  | 0000:03:00.0      On |                  N/A |
-| 61%   86C    P2   130W / 250W |  10903MiB / 11170MiB |     82%      Default |
+| 46%   80C    P2   176W / 250W |  10903MiB / 11170MiB |     83%      Default |
 +-------------------------------+----------------------+----------------------+
 |   1  GeForce GTX 108...  Off  | 0000:04:00.0     Off |                  N/A |
-| 49%   83C    P2   160W / 250W |  10547MiB / 11172MiB |     82%      Default |
+| 38%   68C    P2   135W / 250W |  10547MiB / 11172MiB |     86%      Default |
 +-------------------------------+----------------------+----------------------+
 |   2  GeForce GTX 108...  Off  | 0000:81:00.0     Off |                  N/A |
-| 48%   84C    P2   192W / 250W |  10547MiB / 11172MiB |     80%      Default |
+| 42%   74C    P2   185W / 250W |  10547MiB / 11172MiB |     84%      Default |
 +-------------------------------+----------------------+----------------------+
 |   3  GeForce GTX 108...  Off  | 0000:82:00.0     Off |                  N/A |
-| 40%   70C    P2   104W / 250W |  10547MiB / 11172MiB |     78%      Default |
+| 31%   58C    P2   168W / 250W |  10547MiB / 11172MiB |     85%      Default |
 +-------------------------------+----------------------+----------------------+
 
 +-----------------------------------------------------------------------------+
@@ -70,15 +98,15 @@ Tue May 16 12:23:58 2017
 |  GPU       PID  Type  Process name                               Usage      |
 |=============================================================================|
 |    0      1563    G   /usr/lib/xorg/Xorg                             184MiB |
-|    0     17834    C   python3                                       5243MiB |
-|    0     18795    C   python3                                       5301MiB |
 |    0     20836    G   compiz                                         171MiB |
-|    1     18403    C   python3                                       5243MiB |
-|    1     19006    C   python3                                       5301MiB |
-|    2     18224    C   python3                                       5243MiB |
-|    2     19846    C   python3                                       5301MiB |
-|    3     18608    C   python3                                       5243MiB |
-|    3     19661    C   python3                                       5301MiB |
+|    0     22150    C   python3                                       5243MiB |
+|    0     23382    C   python3                                       5301MiB |
+|    1     22331    C   python3                                       5243MiB |
+|    1     23440    C   python3                                       5301MiB |
+|    2     22511    C   python3                                       5243MiB |
+|    2     23753    C   python3                                       5301MiB |
+|    3     22688    C   python3                                       5243MiB |
+|    3     23811    C   python3                                       5301MiB |
 +-----------------------------------------------------------------------------+
 ```
 

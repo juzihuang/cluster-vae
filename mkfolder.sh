@@ -1,3 +1,4 @@
+## Making directories for storing results
 mkdir result_mnist_clvae
 mkdir result_mnist_vae
 mkdir result_sita_clvae
