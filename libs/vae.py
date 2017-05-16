@@ -130,80 +130,80 @@ def VAE(input_shape=[None, 784],
 
     shapes.append(current_input.get_shape().as_list())
 
+    dims = current_input.get_shape().as_list()
+    flattened = utils.flatten(current_input)
+
+    if n_hidden:
+        h = utils.linear(flattened, n_hidden, name='W_fc')[0]
+        h = activation(batch_norm(h, phase_train, 'fc/bn'))
+        if dropout:
+            h = tf.nn.dropout(h, keep_prob)
+    else:
+        h = flattened
+
+    # Sample from posterior
     with tf.variable_scope('variational'):
+        z_mu = utils.linear(h, n_code, name='mu')[0]
+        z_log_sigma = 0.5 * utils.linear(h, n_code, name='log_sigma')[0]
+
         if variational:
-            dims = current_input.get_shape().as_list()
-            flattened = utils.flatten(current_input)
-
-            if n_hidden:
-                h = utils.linear(flattened, n_hidden, name='W_fc')[0]
-                h = activation(batch_norm(h, phase_train, 'fc/bn'))
-                if dropout:
-                    h = tf.nn.dropout(h, keep_prob)
-            else:
-                h = flattened
-
-            z_mu = utils.linear(h, n_code, name='mu')[0]
-            z_log_sigma = 0.5 * utils.linear(h, n_code, name='log_sigma')[0]
-
             # Sample from noise distribution p(eps) ~ N(0, 1)
             epsilon = tf.random_normal(
                 tf.stack([tf.shape(x)[0], n_code]))
-
-            # Sample from posterior
             z = z_mu + tf.multiply(epsilon, tf.exp(z_log_sigma))
-
-            if clustered:
-                # K-Means cluster assisted clustering for latent space
-                # Here we can not use tf.Variable() to define centroids
-                # centroids = tf.slice(tf.random_shuffle(z), [0, 0], [n_clusters, -1])
-                points_expanded = tf.expand_dims(z, 0)
-                centroids_expanded = tf.expand_dims(old_cent, 1)
-                distances = tf.reduce_sum(tf.square(tf.subtract(points_expanded,
-                                                                centroids_expanded)),
-                                                                2)
-                assignments = tf.argmin(distances, 0)
-
-                # Calculating the total distance for loss
-                distance_all = tf.reduce_mean(tf.reduce_min(distances, axis=0))
-
-                # Updating the centroids according to all labeled data
-                means = []
-                for c in range(n_clusters):
-                    means.append(tf.reduce_mean(
-                      tf.gather(z,
-                                tf.reshape(tf.where(tf.equal(assignments, c)),
-                                           [1,-1])),
-                      reduction_indices=[1]))
-
-                new_cent = tf.concat(means, 0)
-            else:
-                new_cent = old_cent
-                ## KNN ending
-
-            if n_hidden:
-                h = utils.linear(z, n_hidden, name='fc_t')[0]
-                h = activation(batch_norm(h, phase_train, 'fc_t/bn'))
-                if dropout:
-                    h = tf.nn.dropout(h, keep_prob)
-            else:
-                h = z
-
-            size = dims[1] * dims[2] * dims[3] if convolutional else dims[1]
-            h = utils.linear(h, size, name='fc_t2')[0]
-            current_input = activation(batch_norm(h, phase_train, 'fc_t2/bn'))
-            if dropout:
-                current_input = tf.nn.dropout(current_input, keep_prob)
-
-            if convolutional:
-                current_input = tf.reshape(
-                    current_input, tf.stack([
-                        tf.shape(current_input)[0],
-                        dims[1],
-                        dims[2],
-                        dims[3]]))
         else:
-            z = current_input
+            z = z_mu
+
+    if n_hidden:
+        h = utils.linear(z, n_hidden, name='fc_t')[0]
+        h = activation(batch_norm(h, phase_train, 'fc_t/bn'))
+        if dropout:
+            h = tf.nn.dropout(h, keep_prob)
+    else:
+        h = z
+
+    size = dims[1] * dims[2] * dims[3] if convolutional else dims[1]
+    h = utils.linear(h, size, name='fc_t2')[0]
+    current_input = activation(batch_norm(h, phase_train, 'fc_t2/bn'))
+    if dropout:
+        current_input = tf.nn.dropout(current_input, keep_prob)
+
+    if convolutional:
+        current_input = tf.reshape(
+            current_input, tf.stack([
+                tf.shape(current_input)[0],
+                dims[1],
+                dims[2],
+                dims[3]]))
+
+    with tf.variable_scope('clustered'):
+        if clustered:
+            # K-Means cluster assisted clustering for latent space
+            # Here we can not use tf.Variable() to define centroids
+            # centroids = tf.slice(tf.random_shuffle(z), [0, 0], [n_clusters, -1])
+            points_expanded = tf.expand_dims(z, 0)
+            centroids_expanded = tf.expand_dims(old_cent, 1)
+            distances = tf.reduce_sum(tf.square(tf.subtract(points_expanded,
+                                                            centroids_expanded)),
+                                                            2)
+            assignments = tf.argmin(distances, 0)
+
+            # Calculating the total distance for loss
+            distance_all = tf.reduce_mean(tf.reduce_min(distances, axis=0))
+
+            # Updating the centroids according to all labeled data
+            means = []
+            for c in range(n_clusters):
+                means.append(tf.reduce_mean(
+                  tf.gather(z,
+                            tf.reshape(tf.where(tf.equal(assignments, c)),
+                                       [1,-1])),
+                  reduction_indices=[1]))
+
+            new_cent = tf.concat(means, 0)
+        else:
+            new_cent = old_cent
+        ## KNN ending
 
     shapes.reverse()
     n_filters.reverse()
@@ -238,23 +238,20 @@ def VAE(input_shape=[None, 784],
 
     # l2 loss
     loss_t = tf.reduce_sum(tf.squared_difference(t_flat, y_flat), 1)
-
+    cost = tf.reduce_mean(loss_t)
     if variational:
         # variational lower bound, kl-divergence
         loss_z = -0.5 * tf.reduce_sum(
             1.0 + 2.0 * z_log_sigma -
             tf.square(z_mu) - tf.exp(2.0 * z_log_sigma), 1)
-        if clustered:
-            # kmeans cluster loss optimization for latent space of vae
-            loss_c = distance_all
-            # add l2 loss
-            cost = tf.reduce_mean(loss_t + loss_z + loss_c)
-        else:
-            # add l2 loss
-            cost = tf.reduce_mean(loss_t + loss_z)
-    else:
-        # just optimize l2 loss
-        cost = tf.reduce_mean(loss_t)
+        # add l2 loss
+        cost = tf.reduce_mean(cost + loss_z)
+
+    if clustered:
+        # kmeans cluster loss optimization for latent space of vae
+        loss_c = distance_all
+        # add l2 loss
+        cost = tf.reduce_mean(cost + loss_c)
 
     return {'cost': cost, 'Ws': Ws,
             'x': x, 't': t, 'z': z, 'y': y,
@@ -411,8 +408,10 @@ def train_vae(files,
 
     try:
         # initial centers for Kmeans
-        old_cent = np.random.uniform(
-            -1.0, 1.0, [n_clusters, n_code]).astype(np.float32)
+        old_cent = sess.run(
+            ae['z'], feed_dict={ae['x']: test_xs,
+                                ae['train']: False,
+                                ae['keep_prob']: 1.0})[:n_clusters]
         # End
         while not coord.should_stop() and epoch_i < n_epochs:
             batch_i += 1

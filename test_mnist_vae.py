@@ -21,10 +21,6 @@ def test_mnist(n_epochs=1000):
     n_code = 2
     n_clusters = 12
     mnist = MNIST(split=[0.8, 0.1, 0.1])
-    # initial centers for Kmeans
-    old_cent = np.random.uniform(
-        -1.0, 1.0, [n_clusters, n_code]).astype(np.float32)
-    # End
     ae = VAE(input_shape=[None, 784],
              n_filters=[512, 256],
              n_hidden=64,
@@ -56,6 +52,11 @@ def test_mnist(n_epochs=1000):
     batch_size = 200
     test_xs = mnist.test.images[:n_examples]
     utils.montage(test_xs.reshape((-1, 28, 28)), output_path + '/test_xs.png')
+    # initial centers for Kmeans
+    old_cent = sess.run(
+        ae['z'], feed_dict={ae['x']: test_xs,
+                            ae['train']: False,
+                            ae['keep_prob']: 1.0})[:n_clusters]
     for epoch_i in range(n_epochs):
         train_i = 0
         train_cost = 0
