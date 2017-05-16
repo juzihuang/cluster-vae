@@ -45,9 +45,7 @@ CUDA_VISIBLE_DEVICES=3 python3 test_mnist_clvae.py
 It will be something like this:
 
 ```sh
-[detached from 10399.vae_mnist]
-user@jhwl:~/Documents/yida/buildboat/cluster-vae$ nvidia-smi
-Mon May 15 10:19:43 2017
+Tue May 16 12:23:58 2017
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
 |-------------------------------+----------------------+----------------------+
@@ -55,30 +53,32 @@ Mon May 15 10:19:43 2017
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
 |===============================+======================+======================|
 |   0  GeForce GTX 108...  Off  | 0000:03:00.0      On |                  N/A |
-| 73%   87C    P2   216W / 250W |  10959MiB / 11170MiB |     63%      Default |
+| 61%   86C    P2   130W / 250W |  10903MiB / 11170MiB |     82%      Default |
 +-------------------------------+----------------------+----------------------+
 |   1  GeForce GTX 108...  Off  | 0000:04:00.0     Off |                  N/A |
-| 65%   85C    P2   138W / 250W |  10637MiB / 11172MiB |     82%      Default |
+| 49%   83C    P2   160W / 250W |  10547MiB / 11172MiB |     82%      Default |
 +-------------------------------+----------------------+----------------------+
 |   2  GeForce GTX 108...  Off  | 0000:81:00.0     Off |                  N/A |
-| 40%   68C    P2    63W / 250W |  10489MiB / 11172MiB |     20%      Default |
+| 48%   84C    P2   192W / 250W |  10547MiB / 11172MiB |     80%      Default |
 +-------------------------------+----------------------+----------------------+
 |   3  GeForce GTX 108...  Off  | 0000:82:00.0     Off |                  N/A |
-| 23%   38C    P8    17W / 250W |      1MiB / 11172MiB |      0%      Default |
+| 40%   70C    P2   104W / 250W |  10547MiB / 11172MiB |     78%      Default |
 +-------------------------------+----------------------+----------------------+
 
 +-----------------------------------------------------------------------------+
 | Processes:                                                       GPU Memory |
 |  GPU       PID  Type  Process name                               Usage      |
 |=============================================================================|
-|    0      1563    G   /usr/lib/xorg/Xorg                             182MiB |
+|    0      1563    G   /usr/lib/xorg/Xorg                             184MiB |
+|    0     17834    C   python3                                       5243MiB |
+|    0     18795    C   python3                                       5301MiB |
 |    0     20836    G   compiz                                         171MiB |
-|    0     21815    C   python3                                       5301MiB |
-|    0     22015    C   python3                                       5301MiB |
-|    1     22228    C   python3                                       5301MiB |
-|    1     22405    C   python3                                       5301MiB |
-|    2     25237    C   python3                                       5243MiB |
-|    2     25465    C   python3                                       5243MiB |
+|    1     18403    C   python3                                       5243MiB |
+|    1     19006    C   python3                                       5301MiB |
+|    2     18224    C   python3                                       5243MiB |
+|    2     19846    C   python3                                       5301MiB |
+|    3     18608    C   python3                                       5243MiB |
+|    3     19661    C   python3                                       5301MiB |
 +-----------------------------------------------------------------------------+
 ```
 

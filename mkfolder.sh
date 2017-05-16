@@ -2,3 +2,5 @@ mkdir result_mnist_clvae
 mkdir result_mnist_vae
 mkdir result_sita_clvae
 mkdir result_sita_vae
+mkdir result_shapenet_clvae
+mkdir result_shapenet_vae

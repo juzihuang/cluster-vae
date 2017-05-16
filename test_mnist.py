@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import os
+import argparse
 from libs.dataset_utils import create_input_pipeline
 from libs.datasets import CELEB, MNIST
 from libs.batch_norm import batch_norm
@@ -8,7 +9,11 @@ from libs import utils
 from libs.vae import VAE, train_vae
 
 # %%
-def test_mnist(n_epochs=1000):
+def test_mnist(n_epochs=1000,
+            convolutional=False,
+            variational=True,
+            clustered=True,
+            output_path="result_mnist_vae"):
     """Train an autoencoder on MNIST.
 
     This function will train an autoencoder on MNIST and also
@@ -16,7 +21,6 @@ def test_mnist(n_epochs=1000):
     the latent space of the inner most dimension of the encoder,
     as well as reconstructions of the decoder.
     """
-    output_path = "result_mnist_vae"
     # load MNIST
     n_code = 2
     n_clusters = 12
@@ -27,9 +31,9 @@ def test_mnist(n_epochs=1000):
              n_code=n_code,
              n_clusters=n_clusters,
              activation=tf.nn.sigmoid,
-             convolutional=False,
-             variational=True,
-             clustered=False)
+             convolutional=convolutional,
+             variational=convolutional,
+             clustered=convolutional)
 
     n_examples = 100
     zs = np.random.uniform(
@@ -106,4 +110,24 @@ def test_mnist(n_epochs=1000):
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
 
 if __name__ == '__main__':
-    test_mnist()
+    parser = argparse.ArgumentParser(description='Parser added')
+    parser.add_argument('-c',
+        action="store_true",
+        dest="convolutional", help='Whether use convolution or not')
+    parser.add_argument('-v',
+        action="store_true",
+        dest="variational", help='Wether use latent variance or not')
+    parser.add_argument('-k',
+        action="store_true",
+        dest="clustered", help='Whether use K-means or not')
+    parser.add_argument('-o',
+        action="store",
+        dest="output_path",
+        default="result_vae", help='Destination for storing results')
+    parser.print_help()
+    results = parser.parse_args()
+    test_mnist(
+        convolutional=results.convolutional,
+        variational=results.variational,
+        clustered=results.clustered,
+        output_path=results.output_path)
