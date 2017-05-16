@@ -456,7 +456,7 @@ def train_vae(files,
                 utils.montage(recon.reshape([-1] + crop_shape),
                               output_path + '/manifold_%08d.png' % t_i)
                 utils.montage(recon.reshape([-1] + crop_shape),
-                            output_path + '/manifold_latest.png' % t_i)
+                            output_path + '/manifold_latest.png')
 
                 # Plot example reconstructions
                 recon = sess.run(
@@ -469,7 +469,7 @@ def train_vae(files,
                 utils.montage(recon.reshape([-1] + crop_shape),
                               output_path+'/reconstruction_%08d.png' % t_i)
                 utils.montage(recon.reshape([-1] + crop_shape),
-                            output_path+'/reconstruction_latest.png' % t_i)
+                            output_path+'/reconstruction_latest.png')
                 t_i += 1
 
             if batch_i % save_step == 0:

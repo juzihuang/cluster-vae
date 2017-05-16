@@ -90,7 +90,7 @@ def test_mnist(n_epochs=1000,
                 m = utils.montage(recon.reshape((-1, 28, 28)),
                     output_path + '/manifold_%08d.png' % t_i)
                 m = utils.montage(recon.reshape((-1, 28, 28)),
-                    output_path + '/manifold_latest.png' % t_i)
+                    output_path + '/manifold_latest.png')
                 # Plot example reconstructions
                 recon = sess.run(
                     ae['y'], feed_dict={ae['x']: test_xs[:36],
@@ -100,7 +100,7 @@ def test_mnist(n_epochs=1000,
                 m = utils.montage(recon.reshape(
                     (-1, 28, 28)), output_path + '/reconstruction_%08d.png' % t_i)
                 m = utils.montage(recon.reshape(
-                    (-1, 28, 28)), output_path + '/reconstruction_latest.png' % t_i)
+                    (-1, 28, 28)), output_path + '/reconstruction_latest.png')
                 t_i += 1
             batch_i += 1
 
