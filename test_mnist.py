@@ -46,7 +46,7 @@ def test_mnist(n_epochs=50000,
 
     # We create a session to use the graph config = tf.ConfigProto()
     config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.32
+    config.gpu_options.per_process_gpu_memory_fraction = 0.45
     sess = tf.Session(config=config)
     sess.run(tf.global_variables_initializer())
 
