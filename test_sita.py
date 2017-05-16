@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import os
-import parser
+import argparse
 from libs.dataset_utils import create_input_pipeline
 from libs.datasets import CELEB, MNIST
 from libs.batch_norm import batch_norm
