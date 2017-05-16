@@ -43,9 +43,9 @@ def test_sita():
         n_epochs=50,
         crop_shape=[90, 160, 3],
         crop_factor=1.0,
-        convolutional=convolutional,
-        variational=variational,
-        clustered=clustered,
+        convolutional=results.convolutional,
+        variational=results.variational,
+        clustered=results.clustered,
         n_filters=[100, 100, 100],
         n_hidden=250,
         n_code=100,
@@ -53,7 +53,7 @@ def test_sita():
         filter_sizes=[3, 3, 3],
         activation=tf.nn.sigmoid,
         ckpt_name='./sita.ckpt',
-        output_path=output_path)
+        output_path=results.output_path)
 
 
 if __name__ == '__main__':

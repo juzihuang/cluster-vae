@@ -36,9 +36,9 @@ def test_shapenet():
         n_epochs=500,
         crop_shape=[112, 112, 3],
         crop_factor=1.0,
-        convolutional=convolutional,
-        variational=variational,
-        clustered=clustered,
+        convolutional=results.convolutional,
+        variational=results.variational,
+        clustered=results.clustered,
         n_filters=[100, 100, 100, 100, 100],
         n_hidden=250,
         n_code=72,
@@ -46,7 +46,7 @@ def test_shapenet():
         filter_sizes=[3, 3, 3, 3, 3],
         activation=tf.nn.sigmoid,
         ckpt_name='./shapenet.ckpt',
-        output_path=output_path,
+        output_path=results.output_path,
         input_type='file_in_csv')
 
 
