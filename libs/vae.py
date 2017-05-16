@@ -267,7 +267,7 @@ def train_vae(files,
               learning_rate=0.0001,
               batch_size=100,
               n_epochs=50,
-              n_examples=10,
+              n_examples=64,
               crop_shape=[64, 64, 3],
               crop_factor=0.8,
               n_filters=[100, 100, 100, 100],
@@ -449,16 +449,18 @@ def train_vae(files,
                 # Plot example reconstructions from latent layer
                 recon = sess.run(
                     ae['y'], feed_dict={
-                        ae['z']: zs,
+                        ae['z']: zs[:36],
                         ae['train']: False,
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
                 utils.montage(recon.reshape([-1] + crop_shape),
                               output_path + '/manifold_%08d.png' % t_i)
+                utils.montage(recon.reshape([-1] + crop_shape),
+                            output_path + '/manifold_latest.png' % t_i)
 
                 # Plot example reconstructions
                 recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs,
+                    ae['y'], feed_dict={ae['x']: test_xs[:36],
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})
@@ -466,6 +468,8 @@ def train_vae(files,
                     recon.min(), recon.max(), recon.mean())
                 utils.montage(recon.reshape([-1] + crop_shape),
                               output_path+'/reconstruction_%08d.png' % t_i)
+                utils.montage(recon.reshape([-1] + crop_shape),
+                            output_path+'/reconstruction_latest.png' % t_i)
                 t_i += 1
 
             if batch_i % save_step == 0:

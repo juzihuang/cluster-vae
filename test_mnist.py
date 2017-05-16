@@ -35,7 +35,7 @@ def test_mnist(n_epochs=1000,
              variational=convolutional,
              clustered=convolutional)
 
-    n_examples = 100
+    n_examples = 64
     zs = np.random.uniform(
         -1.0, 1.0, [4, n_code]).astype(np.float32)
     zs = utils.make_latent_manifold(zs, n_examples)
@@ -89,14 +89,18 @@ def test_mnist(n_epochs=1000,
                         ae['old_cent']: old_cent})
                 m = utils.montage(recon.reshape((-1, 28, 28)),
                     output_path + '/manifold_%08d.png' % t_i)
+                m = utils.montage(recon.reshape((-1, 28, 28)),
+                    output_path + '/manifold_latest.png' % t_i)
                 # Plot example reconstructions
                 recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs,
+                    ae['y'], feed_dict={ae['x']: test_xs[:36],
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})
                 m = utils.montage(recon.reshape(
                     (-1, 28, 28)), output_path + '/reconstruction_%08d.png' % t_i)
+                m = utils.montage(recon.reshape(
+                    (-1, 28, 28)), output_path + '/reconstruction_latest.png' % t_i)
                 t_i += 1
             batch_i += 1
 
