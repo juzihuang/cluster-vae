@@ -1,5 +1,8 @@
+# Those 3 lines must be setted when we ssh other servers without displaying
 import matplotlib
-matplotlib.use('Agg') 
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+#
 import tensorflow as tf
 import numpy as np
 import hypertools as hyp
