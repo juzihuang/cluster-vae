@@ -183,7 +183,6 @@ shopt -u nullglob
 cd ../
 ```
 ### MNIST
-
 #### AE
 
 <p>Samples for reconstruction and the reconstructed results:</p>
@@ -204,10 +203,11 @@ cd ../
     <th>Keans Clustered</th>
     <th>Groudtruth</th>
   </tr>
-<tr>
-<td><img src="readme_images/mnist_ae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_ae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/mnist_ae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_ae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### cluster AE
 
@@ -229,10 +229,11 @@ cd ../
     <th>Keans Clustered</th>
     <th>Groudtruth</th>
   </tr>
-<tr>
-<td><img src="readme_images/mnist_clae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_clae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/mnist_clae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_clae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### VAE
 
@@ -242,10 +243,11 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/mnist_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/mnist_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 <p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
 <table>
@@ -253,10 +255,11 @@ cd ../
     <th>Keans Clustered</th>
     <th>Groudtruth</th>
   </tr>
-<tr>
-<td><img src="readme_images/mnist_vae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_vae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/mnist_vae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_vae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### cluster VAE
 
@@ -266,10 +269,11 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/mnist_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/mnist_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 <p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
 <table>
@@ -277,10 +281,11 @@ cd ../
     <th>Keans Clustered</th>
     <th>Groudtruth</th>
   </tr>
-<tr>
-<td><img src="readme_images/mnist_clvae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/mnist_clvae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/mnist_clvae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_clvae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 ### Sita
 #### AE
@@ -291,10 +296,11 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/sita_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/sita_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/sita_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### cluster AE
 
@@ -304,10 +310,11 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/sita_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/sita_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/sita_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### VAE
 
@@ -317,10 +324,11 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/sita_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/sita_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/sita_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### cluster VAE
 
@@ -330,13 +338,13 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/sita_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/sita_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/sita_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/sita_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 ### ShapeNet
-
 #### AE
 
 <p>Samples for reconstruction and the reconstructed results:</p>
@@ -345,18 +353,21 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/shapenet_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/shapenet_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/shapenet_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/shapenet_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### cluster AE
 
 <p>Samples for reconstruction and the reconstructed results:</p>
-<table><tr>
-<td><img src="readme_images/shapenet_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/shapenet_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+<table>
+  <tr>
+    <td><img src="readme_images/shapenet_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/shapenet_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### VAE
 
@@ -366,10 +377,11 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/shapenet_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/shapenet_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/shapenet_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/shapenet_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
 
 #### cluster VAE
 
@@ -379,7 +391,8 @@ cd ../
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
   </tr>
-<tr>
-<td><img src="readme_images/shapenet_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-<td><img src="readme_images/shapenet_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-</tr></table>
+  <tr>
+    <td><img src="readme_images/shapenet_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/shapenet_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+  </tr>
+</table>
