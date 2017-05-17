@@ -1,8 +1,7 @@
+import matplotlib
+matplotlib.use('Agg') 
 import tensorflow as tf
 import numpy as np
-import matplotlib
-# Force matplotlib to not use any Xwindows backend.
-matplotlib.use('Agg')
 import hypertools as hyp
 import os
 import argparse
