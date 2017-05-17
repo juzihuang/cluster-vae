@@ -115,7 +115,10 @@ cp ../../buildboat/cluster-vae/result_sita_ae/reconstruction_latest.png \
 
 ## Resize all images in jpg and png to new size to fit on squared map
 ## with a small size
+cd readme_images
 shopt -s nullglob
 for image in *.jpg *.png; do
   mogrify -resize 256x256 "${image}"
 done
+shopt -u nullglob
+cd ../

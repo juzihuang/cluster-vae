@@ -171,9 +171,16 @@ Wed May 17 10:57:26 2017
 
 ## Results
 
-Make folders for storing result by:
+There are many useful shell scripts in ```./mkfolder.sh```.
+Resize all images in jpg and png to new size to fit on squared map with a small size
 ```sh
-./mkfolder.sh
+cd readme_images
+shopt -s nullglob
+for image in *.jpg *.png; do
+  mogrify -resize 256x256 "${image}"
+done
+shopt -u nullglob
+cd ../
 ```
 ### MNIST
 
