@@ -7,6 +7,7 @@ Copyright Yida Wang, May 2017
 import tensorflow as tf
 import numpy as np
 import os
+import csv
 from libs.dataset_utils import create_input_pipeline
 from libs.datasets import CELEB, MNIST
 from libs.batch_norm import batch_norm
@@ -265,9 +266,9 @@ def VAE(input_shape=[None, 784],
 def train_vae(files,
               input_shape,
               learning_rate=0.0001,
-              batch_size=100,
+              batch_size=128,
               n_epochs=50,
-              n_examples=36,
+              n_examples=8,
               crop_shape=[64, 64, 3],
               crop_factor=0.8,
               n_filters=[100, 100, 100, 100],
@@ -304,8 +305,8 @@ def train_vae(files,
         Number of epochs.
     n_examples : int, optional
         Number of example to use while demonstrating the current training
-        iteration's reconstruction.  Creates a square montage, so make
-        sure int(sqrt(n_examples))**2 = n_examples, e.g. 16, 25, 36, ... 100.
+        iteration's reconstruction.  Creates a square montage, so:
+        n_examples**2 = 16, 25, 36, ... 100.
     crop_shape : list, optional
         Size to centrally crop the image to.
     crop_factor : float, optional
@@ -372,7 +373,7 @@ def train_vae(files,
 
     # We create a session to use the config = tf.ConfigProto()
     config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.45
+    config.gpu_options.per_process_gpu_memory_fraction = 0.3
     sess = tf.Session(config=config)
     saver = tf.train.Saver()
     sess.run(tf.global_variables_initializer())
@@ -394,17 +395,25 @@ def train_vae(files,
     batch_i = 0
     epoch_i = 0
     cost = 0
-    n_files = len(files)
+    
+    # Get the number of training samples
+    if input_type == 'file_in_csv':
+        with open(files,"r") as f:
+            reader = csv.reader(f,delimiter = ",")
+            data = list(reader)
+            n_files = len(data)
+    elif input_type == 'file_list':
+        n_files = len(files)
 
     if input_type == 'file_list':
         test_xs = sess.run(batch) / 255.0
-        utils.montage(test_xs[:n_examples], output_path + '/test_xs.png')
+        utils.montage(test_xs[:n_examples**2], output_path + '/test_xs.png')
     elif input_type == 'file_in_csv':
         test_xs, test_ts, _ = sess.run(batch)
         test_xs /= 255.0
         test_ts /= 255.0
-        utils.montage(test_xs[:n_examples], output_path + '/test_xs.png')
-        utils.montage(test_ts[:n_examples], output_path + '/test_ts.png')
+        utils.montage(test_xs[:n_examples**2], output_path + '/test_xs.png')
+        utils.montage(test_ts[:n_examples**2], output_path + '/test_ts.png')
 
     try:
         # initial centers for Kmeans
@@ -454,13 +463,13 @@ def train_vae(files,
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
                 utils.montage(recon.reshape([-1] + crop_shape),
-                              output_path + '/manifold_%08d.png' % t_i)
+                    output_path + '/manifold_%08d.png' % t_i)
                 utils.montage(recon.reshape([-1] + crop_shape),
-                            output_path + '/manifold_latest.png')
+                    output_path + '/manifold_latest.png')
 
                 # Plot example reconstructions
                 recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs[:n_examples],
+                    ae['y'], feed_dict={ae['x']: test_xs[:n_examples**2],
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})

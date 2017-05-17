@@ -35,7 +35,7 @@ def test_mnist(n_epochs=50000,
              variational=variational,
              clustered=clustered)
 
-    n_examples = 36
+    n_examples = 8
     zs = np.random.uniform(
         -1.0, 1.0, [4, n_code]).astype(np.float32)
     zs = utils.make_latent_manifold(zs, n_examples)
@@ -46,7 +46,7 @@ def test_mnist(n_epochs=50000,
 
     # We create a session to use the graph config = tf.ConfigProto()
     config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.45
+    config.gpu_options.per_process_gpu_memory_fraction = 0.3
     sess = tf.Session(config=config)
     sess.run(tf.global_variables_initializer())
 
@@ -54,7 +54,7 @@ def test_mnist(n_epochs=50000,
     t_i = 0
     batch_i = 0
     batch_size = 200
-    test_xs = mnist.test.images[:n_examples]
+    test_xs = mnist.test.images[:n_examples**2]
     utils.montage(test_xs.reshape((-1, 28, 28)), output_path + '/test_xs.png')
     # initial centers for Kmeans
     old_cent = sess.run(
@@ -93,7 +93,7 @@ def test_mnist(n_epochs=50000,
                     output_path + '/manifold_latest.png')
                 # Plot example reconstructions
                 recon = sess.run(
-                    ae['y'], feed_dict={ae['x']: test_xs[:n_examples],
+                    ae['y'], feed_dict={ae['x']: test_xs[:n_examples**2],
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})

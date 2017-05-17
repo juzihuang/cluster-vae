@@ -15,53 +15,41 @@ mkdir result_shapenet_vae
 ## Four tests on MNIST databse with variational/clustered without convolutional
 screen -r ae_mnist
 CUDA_VISIBLE_DEVICES=0 python3 test_mnist.py -o result_mnist_ae
-screen -d ae_mnist
 
 screen -r vae_mnist
 CUDA_VISIBLE_DEVICES=1 python3 test_mnist.py -v -o result_mnist_vae
-screen -d vae_mnist
 
 screen -r clae_mnist
 CUDA_VISIBLE_DEVICES=2 python3 test_mnist.py -k  -o result_mnist_clae
-screen -d clae_mnist
 
 screen -r clvae_mnist
 CUDA_VISIBLE_DEVICES=3 python3 test_mnist.py -v -k -o result_mnist_clvae
-screen -d clvae_mnist
 
 ## Four tests on ShapeNet databse with variational/clustered with convolutional
 screen -r ae_shapenet
 CUDA_VISIBLE_DEVICES=0 python3 test_shapenet.py -c -o result_shapenet_ae
-screen -d ae_shapenet
 
 screen -r vae_shapenet
 CUDA_VISIBLE_DEVICES=1 python3 test_shapenet.py -c -v -o result_shapenet_vae
-screen -d vae_shapenet
 
 screen -r clae_shapenet
 CUDA_VISIBLE_DEVICES=2 python3 test_shapenet.py -c -k -o result_shapenet_clae
-screen -d clae_shapenet
 
 screen -r clvae_shapenet
 CUDA_VISIBLE_DEVICES=3 python3 test_shapenet.py -c -v -k -o result_shapenet_clvae
-screen -d clvae_shapenet
 
 ## Four tests on Sita databse with variational/clustered with convolutional
 screen -r ae_sita
 CUDA_VISIBLE_DEVICES=0 python3 test_sita.py -c -o result_sita_ae
-screen -d ae_sita
 
 screen -r vae_sita
 CUDA_VISIBLE_DEVICES=1 python3 test_sita.py -c -v -o result_sita_vae
-screen -d vae_sita
 
 screen -r clae_sita
 CUDA_VISIBLE_DEVICES=2 python3 test_sita.py -c -k -o result_sita_clae
-screen -d clae_sita
 
 screen -r clvae_sita
 CUDA_VISIBLE_DEVICES=3 python3 test_sita.py -c -v -k -o result_sita_clvae
-screen -d clvae_sita
 
 ## Move montage figures into a target folder
 # mnist samples
