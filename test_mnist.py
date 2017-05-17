@@ -122,8 +122,10 @@ def test_mnist(n_epochs=50000,
             label_viz = np.append(label_viz, batch_ys.argmax(1)).astype(int)
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
-        hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_%08d.png' % epoch_i)
-        hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_%08d.png' % epoch_i)
+        #hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_%08d.png' % epoch_i)
+        #hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_%08d.png' % epoch_i)
+        hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
+        hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
 
 if __name__ == '__main__':
