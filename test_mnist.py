@@ -108,7 +108,8 @@ from libs.vae import VAE, train_vae
             valid_i = 0
             valid_cost = 0
             z_viz = []
-            for batch_xs, _ in mnist.valid.next_batch(batch_size):
+            label_viz =[]
+            for batch_xs, batch_ys in mnist.valid.next_batch(batch_size):
                 valid_cost += sess.run([ae['cost']], feed_dict={
                     ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0,
                     ae['old_cent']: old_cent})[0]
