@@ -26,7 +26,7 @@ def VAE(input_shape=[None, 784],
         convolutional=False,
         variational=False,
         clustered=False):
-    """(Variational) (Convolutional) (Denoising) Autoencoder.
+    """(Variational) (Convolutional) (Denoising) (Clustered) Autoencoder.
 
     Uses tied weights.
 
@@ -287,7 +287,8 @@ def train_vae(files,
               output_path="result",
               ckpt_name="vae.ckpt",
               input_type='file_list'):
-    """General purpose training of a (Variational) (Convolutional) Autoencoder.
+    """General purpose training of a (Variational) (Convolutional) (Clustered)
+        Autoencoder.
 
     Supply a list of file paths to images, and this will do everything else.
 
@@ -334,8 +335,11 @@ def train_vae(files,
         reconstruction.
     save_step : int, optional
         How often to save checkpoints.
+    output_path : str, optional
+        Defien a path for saving result and sample images
     ckpt_name : str, optional
         Checkpoints will be named as this, e.g. 'model.ckpt'
+    input_type : str, Choose path or list for loading data
     """
     batch = create_input_pipeline(
         files=files,
@@ -395,7 +399,7 @@ def train_vae(files,
     batch_i = 0
     epoch_i = 0
     cost = 0
-    
+
     # Get the number of training samples
     if input_type == 'file_in_csv':
         with open(files,"r") as f:
