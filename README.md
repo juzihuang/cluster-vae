@@ -192,6 +192,11 @@ cd ../
 <td><img src="readme_images/mnist_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
+<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<table><tr>
+<td><img src="readme_images/mnist_ae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_ae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+</tr></table>
 
 #### cluster AE
 
@@ -199,6 +204,12 @@ cd ../
 <table><tr>
 <td><img src="readme_images/mnist_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 <td><img src="readme_images/mnist_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+</tr></table>
+
+<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<table><tr>
+<td><img src="readme_images/mnist_clae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_clae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
 #### VAE
@@ -209,6 +220,11 @@ cd ../
 <td><img src="readme_images/mnist_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
+<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<table><tr>
+<td><img src="readme_images/mnist_vae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_vae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+</tr></table>
 
 #### cluster VAE
 
@@ -218,6 +234,11 @@ cd ../
 <td><img src="readme_images/mnist_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
 </tr></table>
 
+<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<table><tr>
+<td><img src="readme_images/mnist_clvae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+<td><img src="readme_images/mnist_clvae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+</tr></table>
 
 ### Sita
 #### AE
