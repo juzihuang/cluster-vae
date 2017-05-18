@@ -111,6 +111,15 @@ cp ../../buildboat/cluster-vae/result_mnist_clvae/scatter_latest.png \
 cp ../../buildboat/cluster-vae/result_mnist_clae/scatter_latest.png \
 ./readme_images/mnist_clae_scatter.png
 
+cp ../../buildboat/cluster-vae/result_mnist_ae/centers_latest.png \
+./readme_images/mnist_ae_centers.png
+cp ../../buildboat/cluster-vae/result_mnist_vae/centers_latest.png \
+./readme_images/mnist_vae_centers.png
+cp ../../buildboat/cluster-vae/result_mnist_clvae/centers_latest.png \
+./readme_images/mnist_clvae_centers.png
+cp ../../buildboat/cluster-vae/result_mnist_clae/centers_latest.png \
+./readme_images/mnist_clae_centers.png
+
 ### shapenet result
 cp ../../buildboat/cluster-vae/result_shapenet_clae/reconstruction_latest.png \
 ./readme_images/shapenet_clae_recon.png

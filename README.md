@@ -206,6 +206,7 @@ cd ../
   <tr>
     <td><img src="readme_images/mnist_ae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_ae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_ae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -232,6 +233,7 @@ cd ../
   <tr>
     <td><img src="readme_images/mnist_clae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_clae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_clae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -258,6 +260,7 @@ cd ../
   <tr>
     <td><img src="readme_images/mnist_vae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_vae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_vae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -284,6 +287,7 @@ cd ../
   <tr>
     <td><img src="readme_images/mnist_clvae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_clvae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/mnist_clvae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
