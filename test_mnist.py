@@ -28,7 +28,7 @@ def test_mnist(n_epochs=50000,
     as well as reconstructions of the decoder.
     """
     # load MNIST
-    n_code = 5
+    n_code = 7
     n_clusters = 10
     mnist = MNIST(split=[0.8, 0.1, 0.1])
     ae = VAE(input_shape=[None, 784],
