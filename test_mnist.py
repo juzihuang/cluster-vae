@@ -28,8 +28,8 @@ def test_mnist(n_epochs=50000,
     as well as reconstructions of the decoder.
     """
     # load MNIST
-    n_code = 2
-    n_clusters = 12
+    n_code = 5
+    n_clusters = 10
     mnist = MNIST(split=[0.8, 0.1, 0.1])
     ae = VAE(input_shape=[None, 784],
              n_filters=[512, 256],
@@ -129,8 +129,9 @@ def test_mnist(n_epochs=50000,
         z_viz = np.reshape(z_viz, (-1, n_code))
         #hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_%08d.png' % epoch_i)
         #hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_%08d.png' % epoch_i)
-        hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
-        hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
+        hyp.plot(z_viz, 'o', ndims=2, n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
+        hyp.plot(old_cent, 'H', ndims=2, show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
+        hyp.plot(z_viz, 'o', ndims=2, group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
 
 if __name__ == '__main__':

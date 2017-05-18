@@ -42,6 +42,7 @@ def test_shapenet():
         n_filters=[100, 100, 100, 100, 100],
         n_hidden=250,
         n_code=72,
+        n_clusters = 12,
         dropout=True,
         filter_sizes=[3, 3, 3, 3, 3],
         activation=tf.nn.sigmoid,
