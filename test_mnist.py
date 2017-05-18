@@ -127,8 +127,7 @@ def test_mnist(n_epochs=50000,
             label_viz = np.append(label_viz, batch_ys.argmax(1)).astype(int)
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
-        #hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_%08d.png' % epoch_i)
-        #hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_%08d.png' % epoch_i)
+        
         hyp.plot(z_viz, 'o', ndims=2, n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
         hyp.plot(old_cent, 'H', ndims=2, show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
         hyp.plot(z_viz, 'o', ndims=2, group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')

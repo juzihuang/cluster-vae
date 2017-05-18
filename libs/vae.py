@@ -146,7 +146,8 @@ def VAE(input_shape=[None, 784],
     with tf.variable_scope('variational'):
         z_mu = utils.linear(h, n_code, name='mu')[0]
         z_log_sigma = 0.5 * utils.linear(h, n_code, name='log_sigma')[0]
-
+        tf.summary.histogram('z_mu', z_mu)
+        tf.summary.histogram('z_log_sigma', z_log_sigma)
         if variational:
             # Sample from noise distribution p(eps) ~ N(0, 1)
             epsilon = tf.random_normal(
@@ -154,7 +155,7 @@ def VAE(input_shape=[None, 784],
             z = z_mu + tf.multiply(epsilon, tf.exp(z_log_sigma))
         else:
             z = z_mu
-
+        tf.summary.histogram('z', z)
     if n_hidden:
         h = utils.linear(z, n_hidden, name='fc_t')[0]
         h = activation(batch_norm(h, phase_train, 'fc_t/bn'))
@@ -184,13 +185,19 @@ def VAE(input_shape=[None, 784],
             # centroids = tf.slice(tf.random_shuffle(z), [0, 0], [n_clusters, -1])
             points_expanded = tf.expand_dims(z, 0)
             centroids_expanded = tf.expand_dims(old_cent, 1)
-            distances = tf.reduce_sum(tf.square(tf.subtract(points_expanded,
-                                                            centroids_expanded)),
-                                                            2)
-            assignments = tf.argmin(distances, 0)
 
-            # Calculating the total distance for loss
-            distance_all = tf.reduce_mean(tf.reduce_min(distances, axis=0))
+            # This will be a distance matrix by utilizing TensorFlow substract in
+            # "Broadcasting" manner which is similar to numpy:
+            # z -> [1, N, n_code]
+            # old_cent -> [n_clusters, 1, n_code]
+            # distance -> [n_clusters, N, n_code]
+            distances = tf.subtract(points_expanded, centroids_expanded)
+
+            # distance -> [n_clusters, N]
+            distances = tf.reduce_sum(tf.square(distances), 2)
+
+            # Returns the index with the smallest value across axes of a tensor.
+            assignments = tf.argmin(distances, 0)
 
             # Updating the centroids according to all labeled data
             means = []
@@ -239,20 +246,27 @@ def VAE(input_shape=[None, 784],
 
     # l2 loss
     loss_t = tf.reduce_sum(tf.squared_difference(t_flat, y_flat), 1)
-    cost = tf.reduce_mean(loss_t)
+    tf.summary.scalar('cost_t', tf.reduce_mean(loss_t))
+
     if variational:
         # variational lower bound, kl-divergence
         loss_z = -0.5 * tf.reduce_sum(
             1.0 + 2.0 * z_log_sigma -
             tf.square(z_mu) - tf.exp(2.0 * z_log_sigma), 1)
         # add l2 loss
-        cost = tf.reduce_mean(cost + loss_z)
+        cost = tf.reduce_mean(loss_t + loss_z)
+        tf.summary.scalar('cost_z', tf.reduce_mean(loss_z))
+    else:
+        cost = tf.reduce_mean(loss_t)
 
     if clustered:
         # kmeans cluster loss optimization for latent space of vae
-        loss_c = distance_all
-        # add l2 loss
-        cost = tf.reduce_mean(cost + loss_c)
+        #loss_c = tf.reduce_sum(tf.reduce_min(distances, axis=0))
+        loss_c = tf.reduce_min(distances, axis=0)
+        cost += tf.reduce_mean(loss_c)
+        tf.summary.scalar('cost_c', tf.reduce_mean(loss_c))
+
+    merged = tf.summary.merge_all()
 
     return {'cost': cost, 'Ws': Ws,
             'x': x, 't': t, 'z': z, 'y': y,
@@ -260,7 +274,8 @@ def VAE(input_shape=[None, 784],
             'new_cent': new_cent,
             'keep_prob': keep_prob,
             'corrupt_prob': corrupt_prob,
-            'train': phase_train}
+            'train': phase_train,
+            'merged': merged}
 
 
 def train_vae(files,
@@ -381,6 +396,7 @@ def train_vae(files,
     sess = tf.Session(config=config)
     saver = tf.train.Saver()
     sess.run(tf.global_variables_initializer())
+    train_writer = tf.summary.FileWriter('./logs', sess.graph)
 
     # This will handle our threaded image pipeline
     coord = tf.train.Coordinator()
@@ -435,10 +451,13 @@ def train_vae(files,
                 batch_xs, batch_ts, _ = sess.run(batch)
                 batch_xs /= 255.0
                 batch_ts /= 255.0
-            train_cost = sess.run([ae['cost'], optimizer], feed_dict={
-                ae['x']: batch_xs, ae['t']: batch_ts, ae['train']: True,
-                ae['keep_prob']: keep_prob,
-                ae['old_cent']: old_cent})[0]
+            summary, train_cost = sess.run(
+                [ae['summary'], ae['cost'], optimizer], feed_dict={
+                    ae['x']: batch_xs, ae['t']: batch_ts, ae['train']: True,
+                    ae['keep_prob']: keep_prob,
+                    ae['old_cent']: old_cent})[0]
+
+            train_writer.add_summary(summary, epoch_i*n_files/batch_size + batch_i)
             print(batch_i, train_cost)
 
             # Get new centroids
