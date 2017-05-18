@@ -59,7 +59,7 @@ def test_mnist(n_epochs=50000,
     # Fit all training data
     t_i = 0
     batch_i = 0
-    batch_size = 200
+    batch_size = 512
     test_xs = mnist.test.images[:n_examples**2]
     utils.montage(test_xs.reshape((-1, 28, 28)), output_path + '/test_xs.png')
     # initial centers for Kmeans
