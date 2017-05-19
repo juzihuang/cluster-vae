@@ -396,7 +396,7 @@ def train_vae(files,
     sess = tf.Session(config=config)
     saver = tf.train.Saver()
     sess.run(tf.global_variables_initializer())
-    train_writer = tf.summary.FileWriter('./logs', sess.graph)
+    train_writer = tf.summary.FileWriter(output_path + '/logs', sess.graph)
 
     # This will handle our threaded image pipeline
     coord = tf.train.Coordinator()
@@ -451,18 +451,18 @@ def train_vae(files,
                 batch_xs, batch_ts, _ = sess.run(batch)
                 batch_xs /= 255.0
                 batch_ts /= 255.0
-            summary, train_cost = sess.run(
-                [ae['summary'], ae['cost'], optimizer], feed_dict={
+            summary, train_cost, _ = sess.run(
+                [ae['merged'], ae['cost'], optimizer], feed_dict={
                     ae['x']: batch_xs, ae['t']: batch_ts, ae['train']: True,
                     ae['keep_prob']: keep_prob,
-                    ae['old_cent']: old_cent})[0]
+                    ae['old_cent']: old_cent})
 
-            train_writer.add_summary(summary, epoch_i*n_files/batch_size + batch_i)
+            train_writer.add_summary(summary, epoch_i*(n_files/batch_size) + batch_i)
             print(batch_i, train_cost)
 
             # Get new centroids
             old_cent = sess.run(
-                ae['new_cent'], feed_dict={ae['x']: test_xs,
+                ae['new_cent'], feed_dict={ae['x']: batch_xs,
                                     ae['train']: False,
                                     ae['keep_prob']: 1.0,
                                     ae['old_cent']: old_cent})
@@ -470,7 +470,7 @@ def train_vae(files,
             old_cent = np.nan_to_num(old_cent)
 
             cost += train_cost
-            if batch_i % n_files == 0:
+            if batch_i % (n_files/batch_size) == 0:
                 print('epoch:', epoch_i)
                 print('average cost:', cost / batch_i)
                 cost = 0

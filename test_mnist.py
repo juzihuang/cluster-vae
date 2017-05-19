@@ -55,6 +55,7 @@ def test_mnist(n_epochs=50000,
     config.gpu_options.per_process_gpu_memory_fraction = 0.3
     sess = tf.Session(config=config)
     sess.run(tf.global_variables_initializer())
+    train_writer = tf.summary.FileWriter(output_path + '/logs', sess.graph)
 
     # Fit all training data
     t_i = 0
@@ -67,22 +68,30 @@ def test_mnist(n_epochs=50000,
         ae['z'], feed_dict={ae['x']: test_xs,
                             ae['train']: False,
                             ae['keep_prob']: 1.0})[:n_clusters]
+
     for epoch_i in range(n_epochs):
         train_i = 0
         train_cost = 0
         for batch_xs, _ in mnist.train.next_batch(batch_size):
-            train_cost += sess.run([ae['cost'], optimizer], feed_dict={
-                ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: True, ae['keep_prob']: 1.0,
-                ae['old_cent']: old_cent})[0]
+            summary, cost_batch, _ = sess.run([ae['merged'], ae['cost'], optimizer], feed_dict={
+                ae['x']: batch_xs, ae['t']: batch_xs,
+                ae['train']: True,
+                ae['keep_prob']: 1.0,
+                ae['old_cent']: old_cent})
+            train_cost += cost_batch
 
             # Get new centroids
             old_cent = sess.run(
-                ae['new_cent'], feed_dict={ae['x']: test_xs,
-                                    ae['train']: False,
-                                    ae['keep_prob']: 1.0,
-                                    ae['old_cent']: old_cent})
+                ae['new_cent'], feed_dict={
+                    ae['x']: batch_xs,
+                    ae['train']: False,
+                    ae['keep_prob']: 1.0,
+                    ae['old_cent']: old_cent})
             # To fix: I don't know why there are nan in cent
             old_cent = np.nan_to_num(old_cent)
+
+            train_writer.add_summary(summary,
+                epoch_i*(mnist.train.images.shape[0]/batch_size) + train_i)
 
             train_i += 1
             if batch_i % 1000 == 0:
@@ -127,10 +136,10 @@ def test_mnist(n_epochs=50000,
             label_viz = np.append(label_viz, batch_ys.argmax(1)).astype(int)
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
-        
-        hyp.plot(z_viz, 'o', ndims=2, n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
-        hyp.plot(old_cent, 'H', ndims=2, show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
-        hyp.plot(z_viz, 'o', ndims=2, group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
+
+        hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
+        hyp.plot(old_cent, 'H', show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
+        hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
 
 if __name__ == '__main__':
