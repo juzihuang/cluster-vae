@@ -149,3 +149,10 @@ for image in *.jpg *.png; do
 done
 shopt -u nullglob
 cd ../
+
+### Moving the logs
+for f in result_*/logs
+do
+  echo $f
+  cp -r $f ./logs/
+done
