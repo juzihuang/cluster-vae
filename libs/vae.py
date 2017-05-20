@@ -457,7 +457,6 @@ def train_vae(files,
                     ae['keep_prob']: keep_prob,
                     ae['old_cent']: old_cent})
 
-            train_writer.add_summary(summary, epoch_i*(n_files/batch_size) + batch_i)
             print(batch_i, train_cost)
 
             # Get new centroids
@@ -471,6 +470,7 @@ def train_vae(files,
 
             cost += train_cost
             if batch_i % (n_files/batch_size) == 0:
+                train_writer.add_summary(summary, epoch_i*(n_files/batch_size) + batch_i)
                 print('epoch:', epoch_i)
                 print('average cost:', cost / batch_i)
                 cost = 0
@@ -485,8 +485,8 @@ def train_vae(files,
                         ae['train']: False,
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
-                utils.montage(recon.reshape([-1] + crop_shape),
-                    output_path + '/manifold_%08d.png' % t_i)
+                #utils.montage(recon.reshape([-1] + crop_shape),
+                #    output_path + '/manifold_%08d.png' % t_i)
                 utils.montage(recon.reshape([-1] + crop_shape),
                     output_path + '/manifold_latest.png')
 
@@ -498,8 +498,8 @@ def train_vae(files,
                                         ae['old_cent']: old_cent})
                 print('reconstruction (min, max, mean):',
                     recon.min(), recon.max(), recon.mean())
-                utils.montage(recon.reshape([-1] + crop_shape),
-                              output_path+'/reconstruction_%08d.png' % t_i)
+                #utils.montage(recon.reshape([-1] + crop_shape),
+                #              output_path+'/reconstruction_%08d.png' % t_i)
                 utils.montage(recon.reshape([-1] + crop_shape),
                             output_path+'/reconstruction_latest.png')
                 t_i += 1

@@ -90,11 +90,10 @@ def test_mnist(n_epochs=50000,
             # To fix: I don't know why there are nan in cent
             old_cent = np.nan_to_num(old_cent)
 
-            train_writer.add_summary(summary,
-                epoch_i*(mnist.train.images.shape[0]/batch_size) + train_i)
-
             train_i += 1
-            if batch_i % 1000 == 0:
+            if batch_i % 100 == 0:
+                train_writer.add_summary(summary,
+                    epoch_i*(mnist.train.images.shape[0]/batch_size) + train_i)
                 # Plot example reconstructions from latent layer
                 recon = sess.run(
                     ae['y'], feed_dict={
@@ -102,8 +101,8 @@ def test_mnist(n_epochs=50000,
                         ae['train']: False,
                         ae['keep_prob']: 1.0,
                         ae['old_cent']: old_cent})
-                m = utils.montage(recon.reshape((-1, 28, 28)),
-                    output_path + '/manifold_%08d.png' % t_i)
+                #m = utils.montage(recon.reshape((-1, 28, 28)),
+                #    output_path + '/manifold_%08d.png' % t_i)
                 m = utils.montage(recon.reshape((-1, 28, 28)),
                     output_path + '/manifold_latest.png')
                 # Plot example reconstructions
@@ -112,8 +111,8 @@ def test_mnist(n_epochs=50000,
                                         ae['train']: False,
                                         ae['keep_prob']: 1.0,
                                         ae['old_cent']: old_cent})
-                m = utils.montage(recon.reshape(
-                    (-1, 28, 28)), output_path + '/reconstruction_%08d.png' % t_i)
+                #m = utils.montage(recon.reshape(
+                #    (-1, 28, 28)), output_path + '/reconstruction_%08d.png' % t_i)
                 m = utils.montage(recon.reshape(
                     (-1, 28, 28)), output_path + '/reconstruction_latest.png')
                 t_i += 1
