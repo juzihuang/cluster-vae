@@ -156,3 +156,10 @@ do
   echo $f
   cp -r $f ./logs/
 done
+
+### Delete figures
+for f in result_*
+do
+  echo $f
+  rm -rf $f/*
+done
