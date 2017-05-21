@@ -372,6 +372,25 @@ cd ../
 </table>
 
 ### ShapeNet
+
+#### Latent space distribution
+
+<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<table>
+  <tr>
+    <th>AE</th>
+    <th>Clustered AE</th>
+    <th>VAE</th>
+    <th>Clustered VAE</th>
+  </tr>
+  <tr>
+    <td><img src="readme_images/TensorBoard_shapenet_ae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
+    <td><img src="readme_images/TensorBoard_shapenet_clae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
+    <td><img src="readme_images/TensorBoard_shapenet_vae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
+    <td><img src="readme_images/TensorBoard_shapenet_clvae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
+  </tr>
+</table>
+
 #### AE
 
 <p>Samples for reconstruction and the reconstructed results:</p>
