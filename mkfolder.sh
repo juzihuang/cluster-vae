@@ -154,7 +154,7 @@ cd ../
 for f in result_*/logs
 do
   echo $f
-  cp -r $f ./logs/
+  rsync -rR $f ./logs
 done
 
 ### Delete figures
