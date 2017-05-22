@@ -3,6 +3,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 #
+import seaborn as sns
 import tensorflow as tf
 import numpy as np
 import hypertools as hyp
@@ -136,6 +137,8 @@ def test_mnist(n_epochs=50000,
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
 
+        g = sns.jointplot(z_viz[:,0], z_viz[:,1], kind="kde", size=7, space=0, color='m')
+        g.savefig(output_path+"/latent_distribution_latest.png")
         hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
         hyp.plot(old_cent, 'H', show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
         hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
