@@ -73,7 +73,7 @@ def test_mnist(n_epochs=50000,
     for epoch_i in range(n_epochs):
         train_i = 0
         train_cost = 0
-        for batch_xs, _ in mnist.train.next_batch(batch_size):
+        for batch_xs, batch_ys in mnist.train.next_batch(batch_size):
             summary, cost_batch, _ = sess.run([ae['merged'], ae['cost'], optimizer], feed_dict={
                 ae['x']: batch_xs, ae['t']: batch_xs,
                 ae['train']: True,
@@ -137,10 +137,11 @@ def test_mnist(n_epochs=50000,
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
 
-        g = sns.jointplot(z_viz[:,0], z_viz[:,1], kind="kde", size=7, space=0, color='b')
-        g.savefig(output_path+"/latent_distribution_latest.png")
+        g = sns.jointplot(z_viz[:,0], z_viz[:,1], xlim={-2.5,2.5}, ylim={-2.5,2.5}, kind="kde", size=7, space=0, color='b')
+        g.savefig(output_path+'/latent_distribution_latest.png')
+        g = sns.jointplot(old_cent[:,0], old_cent[:,1], xlim={-2.5,2.5}, ylim={-2.5,2.5}, size=7, space=0, color="r")
+        g.savefig(output_path+'/centers_latest.png')
         hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
-        hyp.plot(old_cent, 'H', show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
         hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
 
