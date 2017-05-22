@@ -137,7 +137,7 @@ def test_mnist(n_epochs=50000,
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
 
-        g = sns.jointplot(z_viz[:,0], z_viz[:,1], kind="kde", size=7, space=0, color='m')
+        g = sns.jointplot(z_viz[:,0], z_viz[:,1], kind="kde", size=7, space=0, color='b')
         g.savefig(output_path+"/latent_distribution_latest.png")
         hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
         hyp.plot(old_cent, 'H', show=False, palette='GnBu_d', save_path=output_path+'/centers_latest.png')
