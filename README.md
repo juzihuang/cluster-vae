@@ -277,11 +277,13 @@ cd ../
   <tr>
     <th>Keans Clustered</th>
     <th>Groudtruth</th>
+    <th>KDE</th>
     <th>Centers</th>
   </tr>
   <tr>
     <td><img src="readme_images/mnist_vae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_vae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/latent_vae_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_vae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
@@ -305,11 +307,13 @@ cd ../
   <tr>
     <th>Keans Clustered</th>
     <th>Groudtruth</th>
+    <th>KDE</th>
     <th>Centers</th>
   </tr>
   <tr>
     <td><img src="readme_images/mnist_clvae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_clvae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/latent_clvae_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
     <td><img src="readme_images/mnist_clvae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
