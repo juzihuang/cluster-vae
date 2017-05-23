@@ -120,10 +120,14 @@ cp ../../buildboat/cluster-vae/result_mnist_clvae/centers_latest.png \
 cp ../../buildboat/cluster-vae/result_mnist_clae/centers_latest.png \
 ./readme_images/mnist_clae_centers.png
 
+cp ../../buildboat/cluster-vae/result_mnist_ae/latent_ae_latest.png \
+./readme_images/latent_ae_latest.png
 cp ../../buildboat/cluster-vae/result_mnist_vae/latent_vae_latest.png \
 ./readme_images/latent_vae_latest.png
 cp ../../buildboat/cluster-vae/result_mnist_clvae/latent_clvae_latest.png \
 ./readme_images/latent_clvae_latest.png
+cp ../../buildboat/cluster-vae/result_mnist_clae/latent_clae_latest.png \
+./readme_images/latent_clae_latest.png
 
 ### shapenet result
 cp ../../buildboat/cluster-vae/result_shapenet_clae/reconstruction_latest.png \
