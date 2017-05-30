@@ -96,7 +96,7 @@ def VAE(input_shape=[None, 784],
     # network input / placeholders for train (bn) and dropout
     x = tf.placeholder(tf.float32, input_shape, 'x')
     t = tf.placeholder(tf.float32, input_shape, 't')
-    old_cent = tf.placeholder(tf.float32, [n_clusters, n_code], 'old_cent')
+    nebula = tf.Variable(tf.truncated_normal([n_clusters, n_code]), 'nebula')
     phase_train = tf.placeholder(tf.bool, name='phase_train')
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
     corrupt_prob = tf.placeholder(tf.float32, [1])
@@ -184,18 +184,18 @@ def VAE(input_shape=[None, 784],
             # Here we can not use tf.Variable() to define centroids
             # centroids = tf.slice(tf.random_shuffle(z), [0, 0], [n_clusters, -1])
             points_expanded = tf.expand_dims(z, 0)
-            centroids_expanded = tf.expand_dims(old_cent, 1)
+            centroids_expanded = tf.expand_dims(nebula, 1)
 
             # This will be a distance matrix by utilizing TensorFlow substract in
             # "Broadcasting" manner which is similar to numpy:
             # z -> [1, N, n_code]
-            # old_cent -> [n_clusters, 1, n_code]
+            # nebula -> [n_clusters, 1, n_code]
             # distance -> [n_clusters, N, n_code]
             distances = tf.subtract(points_expanded, centroids_expanded)
 
             # distance -> [n_clusters, N]
             distances = tf.reduce_sum(tf.square(distances), 2)
-
+            ''' Below is the real K-means updating
             # Returns the index with the smallest value across axes of a tensor.
             assignments = tf.argmin(distances, 0)
 
@@ -210,7 +210,8 @@ def VAE(input_shape=[None, 784],
 
             new_cent = tf.concat(means, 0)
         else:
-            new_cent = old_cent
+            new_cent = nebula
+            '''
         ## KNN ending
 
     shapes.reverse()
@@ -270,8 +271,7 @@ def VAE(input_shape=[None, 784],
 
     return {'cost': cost, 'Ws': Ws,
             'x': x, 't': t, 'z': z, 'y': y,
-            'old_cent': old_cent,
-            'new_cent': new_cent,
+            'nebula': nebula,
             'keep_prob': keep_prob,
             'corrupt_prob': corrupt_prob,
             'train': phase_train,
@@ -436,12 +436,6 @@ def train_vae(files,
         utils.montage(test_ts[:n_examples**2], output_path + '/test_ts.png')
 
     try:
-        # initial centers for Kmeans
-        old_cent = sess.run(
-            ae['z'], feed_dict={ae['x']: test_xs,
-                                ae['train']: False,
-                                ae['keep_prob']: 1.0})[:n_clusters]
-        # End
         while not coord.should_stop() and epoch_i < n_epochs:
             batch_i += 1
             if input_type == 'file_list':
@@ -454,19 +448,15 @@ def train_vae(files,
             summary, train_cost, _ = sess.run(
                 [ae['merged'], ae['cost'], optimizer], feed_dict={
                     ae['x']: batch_xs, ae['t']: batch_ts, ae['train']: True,
-                    ae['keep_prob']: keep_prob,
-                    ae['old_cent']: old_cent})
+                    ae['keep_prob']: keep_prob})
 
             print(batch_i, train_cost)
 
             # Get new centroids
-            old_cent = sess.run(
-                ae['new_cent'], feed_dict={ae['x']: batch_xs,
+            nebula = sess.run(
+                ae['nebula'], feed_dict={ae['x']: batch_xs,
                                     ae['train']: False,
-                                    ae['keep_prob']: 1.0,
-                                    ae['old_cent']: old_cent})
-            # To fix: I don't know why there are nan in cent
-            old_cent = np.nan_to_num(old_cent)
+                                    ae['keep_prob']: 1.0})
 
             cost += train_cost
             if batch_i % (n_files/batch_size) == 0:
@@ -483,8 +473,7 @@ def train_vae(files,
                     ae['y'], feed_dict={
                         ae['z']: zs,
                         ae['train']: False,
-                        ae['keep_prob']: 1.0,
-                        ae['old_cent']: old_cent})
+                        ae['keep_prob']: 1.0})
                 #utils.montage(recon.reshape([-1] + crop_shape),
                 #    output_path + '/manifold_%08d.png' % t_i)
                 utils.montage(recon.reshape([-1] + crop_shape),
@@ -494,8 +483,7 @@ def train_vae(files,
                 recon = sess.run(
                     ae['y'], feed_dict={ae['x']: test_xs[:n_examples**2],
                                         ae['train']: False,
-                                        ae['keep_prob']: 1.0,
-                                        ae['old_cent']: old_cent})
+                                        ae['keep_prob']: 1.0})
                 print('reconstruction (min, max, mean):',
                     recon.min(), recon.max(), recon.mean())
                 #utils.montage(recon.reshape([-1] + crop_shape),

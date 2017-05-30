@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import tensorflow as tf
 import numpy as np
-import hypertools as hyp
+import pandas as pd
 import os
 import argparse
 from libs.dataset_utils import create_input_pipeline
@@ -16,7 +16,7 @@ from libs import utils
 from libs.vae import VAE, train_vae
 
 # %%
-def test_mnist(n_epochs=50000,
+def test_mnist(n_epochs=5000,
             convolutional=False,
             variational=True,
             clustered=True,
@@ -64,11 +64,6 @@ def test_mnist(n_epochs=50000,
     batch_size = 512
     test_xs = mnist.test.images[:n_examples**2]
     utils.montage(test_xs.reshape((-1, 28, 28)), output_path + '/test_xs.png')
-    # initial centers for Kmeans
-    old_cent = sess.run(
-        ae['z'], feed_dict={ae['x']: test_xs,
-                            ae['train']: False,
-                            ae['keep_prob']: 1.0})[:n_clusters]
 
     for epoch_i in range(n_epochs):
         train_i = 0
@@ -77,19 +72,15 @@ def test_mnist(n_epochs=50000,
             summary, cost_batch, _ = sess.run([ae['merged'], ae['cost'], optimizer], feed_dict={
                 ae['x']: batch_xs, ae['t']: batch_xs,
                 ae['train']: True,
-                ae['keep_prob']: 1.0,
-                ae['old_cent']: old_cent})
+                ae['keep_prob']: 1.0})
             train_cost += cost_batch
 
             # Get new centroids
-            old_cent = sess.run(
-                ae['new_cent'], feed_dict={
+            nebula = sess.run(
+                ae['nebula'], feed_dict={
                     ae['x']: batch_xs,
                     ae['train']: False,
-                    ae['keep_prob']: 1.0,
-                    ae['old_cent']: old_cent})
-            # To fix: I don't know why there are nan in cent
-            old_cent = np.nan_to_num(old_cent)
+                    ae['keep_prob']: 1.0})
 
             train_i += 1
             if batch_i % 100 == 0:
@@ -100,8 +91,7 @@ def test_mnist(n_epochs=50000,
                     ae['y'], feed_dict={
                         ae['z']: zs,
                         ae['train']: False,
-                        ae['keep_prob']: 1.0,
-                        ae['old_cent']: old_cent})
+                        ae['keep_prob']: 1.0})
                 #m = utils.montage(recon.reshape((-1, 28, 28)),
                 #    output_path + '/manifold_%08d.png' % t_i)
                 m = utils.montage(recon.reshape((-1, 28, 28)),
@@ -110,8 +100,7 @@ def test_mnist(n_epochs=50000,
                 recon = sess.run(
                     ae['y'], feed_dict={ae['x']: test_xs[:n_examples**2],
                                         ae['train']: False,
-                                        ae['keep_prob']: 1.0,
-                                        ae['old_cent']: old_cent})
+                                        ae['keep_prob']: 1.0})
                 #m = utils.montage(recon.reshape(
                 #    (-1, 28, 28)), output_path + '/reconstruction_%08d.png' % t_i)
                 m = utils.montage(recon.reshape(
@@ -125,25 +114,36 @@ def test_mnist(n_epochs=50000,
         label_viz =[]
         for batch_xs, batch_ys in mnist.valid.next_batch(batch_size):
             valid_cost += sess.run([ae['cost']], feed_dict={
-                ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0,
-                ae['old_cent']: old_cent})[0]
+                ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0})[0]
             # Plot the latent variables
             z_viz = np.append(
                 z_viz,
                 sess.run([ae['z']], feed_dict={
-                    ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0,
-                    ae['old_cent']: old_cent})[0])
+                    ae['x']: batch_xs, ae['t']: batch_xs, ae['train']: False, ae['keep_prob']: 1.0})[0])
             label_viz = np.append(label_viz, batch_ys.argmax(1)).astype(int)
             valid_i += 1
         z_viz = np.reshape(z_viz, (-1, n_code))
 
-        g = sns.jointplot(z_viz[:,0], z_viz[:,1], xlim={-2.5,2.5}, ylim={-2.5,2.5}, kind="kde", size=7, space=0, color='b')
-        g.savefig(output_path+'/latent_distribution_latest.png')
-        g = sns.jointplot(old_cent[:,0], old_cent[:,1], xlim={-2.5,2.5}, ylim={-2.5,2.5}, size=7, space=0, color="r")
-        g.savefig(output_path+'/centers_latest.png')
-        hyp.plot(z_viz, 'o', n_clusters=n_clusters, show=False, save_path=output_path+'/kmeans_latest.png')
-        hyp.plot(z_viz, 'o', group=label_viz, show=False, save_path=output_path+'/scatter_latest.png')
         print('train:', train_cost / train_i, 'valid:', valid_cost / valid_i)
+
+        # Start ploting distributions on latent space
+        with sns.color_palette(palette="hls", n_colors=n_clusters):
+            g = sns.jointplot(z_viz[:,0], z_viz[:,1],
+                xlim={-2.5,2.5}, ylim={-2.5,2.5},
+                kind="kde", size=6, space=0.2, color='b')
+            g.savefig(output_path+'/latent_distribution_latest.png')
+            g = sns.jointplot(nebula[:,0], nebula[:,1],
+                xlim={-2.5,2.5}, ylim={-2.5,2.5},
+                size=6, space=0.2, color="r")
+            g.savefig(output_path+'/centers_latest.png')
+            pdd = pd.DataFrame(data=z_viz, index=label_viz, columns = ['x', 'y'])
+            g = sns.JointGrid("x", "y", space=0.2,
+                xlim={-2.5,2.5}, ylim={-2.5,2.5}, data=pdd)
+            for idx, perviz in pdd.groupby(label_viz):
+                sns.kdeplot(perviz["x"], ax=g.ax_marg_x, legend=False)
+                sns.kdeplot(perviz["y"], ax=g.ax_marg_y, vertical=True, legend=False)
+                g.ax_joint.plot(perviz["x"], perviz["y"], "o", ms=5)
+            g.savefig(output_path+'/scatter_latest.png')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Parser added')

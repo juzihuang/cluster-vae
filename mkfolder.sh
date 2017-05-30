@@ -93,13 +93,13 @@ cp ../../buildboat/cluster-vae/result_mnist_clvae/reconstruction_latest.png \
 cp ../../buildboat/cluster-vae/result_mnist_clae/reconstruction_latest.png \
 ./readme_images/mnist_clae_recon.png
 
-cp ../../buildboat/cluster-vae/result_mnist_ae/kmeans_latest.png \
+cp ../../buildboat/cluster-vae/result_mnist_ae/manifold_latest.png \
 ./readme_images/mnist_ae_kmeans.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/kmeans_latest.png \
+cp ../../buildboat/cluster-vae/result_mnist_vae/manifold_latest.png \
 ./readme_images/mnist_vae_kmeans.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/kmeans_latest.png \
+cp ../../buildboat/cluster-vae/result_mnist_clvae/manifold_latest.png \
 ./readme_images/mnist_clvae_kmeans.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/kmeans_latest.png \
+cp ../../buildboat/cluster-vae/result_mnist_clae/manifold_latest.png \
 ./readme_images/mnist_clae_kmeans.png
 
 cp ../../buildboat/cluster-vae/result_mnist_ae/scatter_latest.png \
