@@ -383,7 +383,7 @@ def train_vae(files,
     # is capable of encoding, though note that this is just
     # a random hyperplane within the latent space, and does not
     # encompass all possible embeddings.
-    rng = numpy.random.RandomState(1)
+    rng = np.random.RandomState(1)
     zs = rng.uniform(
         -1.0, 1.0, [4, n_code]).astype(np.float32)
     zs = utils.make_latent_manifold(zs, n_examples)
