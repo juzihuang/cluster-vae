@@ -52,102 +52,16 @@ CUDA_VISIBLE_DEVICES=2 python3 test_sita.py -c -k -o result_sita_clae
 screen -r clvae_sita
 CUDA_VISIBLE_DEVICES=3 python3 test_sita.py -c -v -k -o result_sita_clvae
 
-## Move montage figures into a target folder
-### mnist samples
-cp ../../buildboat/cluster-vae/result_mnist_ae/test_xs.png \
-./readme_images/mnist_ae_test.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/test_xs.png \
-./readme_images/mnist_vae_test.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/test_xs.png \
-./readme_images/mnist_clvae_test.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/test_xs.png \
-./readme_images/mnist_clae_test.png
-
-### shapenet samples
-cp ../../buildboat/cluster-vae/result_shapenet_clae/test_xs.png \
-./readme_images/shapenet_clae_test.png
-cp ../../buildboat/cluster-vae/result_shapenet_clvae/test_xs.png \
-./readme_images/shapenet_clvae_test.png
-cp ../../buildboat/cluster-vae/result_shapenet_vae/test_xs.png \
-./readme_images/shapenet_vae_test.png
-cp ../../buildboat/cluster-vae/result_shapenet_ae/test_xs.png \
-./readme_images/shapenet_ae_test.png
-
-### sita samples
-cp ../../buildboat/cluster-vae/result_sita_clae/test_xs.png \
-./readme_images/sita_clae_test.png
-cp ../../buildboat/cluster-vae/result_sita_clvae/test_xs.png \
-./readme_images/sita_clvae_test.png
-cp ../../buildboat/cluster-vae/result_sita_vae/test_xs.png \
-./readme_images/sita_vae_test.png
-cp ../../buildboat/cluster-vae/result_sita_ae/test_xs.png \
-./readme_images/sita_ae_test.png
-
-### mnist result
-cp ../../buildboat/cluster-vae/result_mnist_ae/reconstruction_latest.png \
-./readme_images/mnist_ae_recon.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/reconstruction_latest.png \
-./readme_images/mnist_vae_recon.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/reconstruction_latest.png \
-./readme_images/mnist_clvae_recon.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/reconstruction_latest.png \
-./readme_images/mnist_clae_recon.png
-
-cp ../../buildboat/cluster-vae/result_mnist_ae/manifold_latest.png \
-./readme_images/mnist_ae_kmeans.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/manifold_latest.png \
-./readme_images/mnist_vae_kmeans.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/manifold_latest.png \
-./readme_images/mnist_clvae_kmeans.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/manifold_latest.png \
-./readme_images/mnist_clae_kmeans.png
-
-cp ../../buildboat/cluster-vae/result_mnist_ae/scatter_latest.png \
-./readme_images/mnist_ae_scatter.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/scatter_latest.png \
-./readme_images/mnist_vae_scatter.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/scatter_latest.png \
-./readme_images/mnist_clvae_scatter.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/scatter_latest.png \
-./readme_images/mnist_clae_scatter.png
-
-cp ../../buildboat/cluster-vae/result_mnist_ae/centers_latest.png \
-./readme_images/mnist_ae_centers.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/centers_latest.png \
-./readme_images/mnist_vae_centers.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/centers_latest.png \
-./readme_images/mnist_clvae_centers.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/centers_latest.png \
-./readme_images/mnist_clae_centers.png
-
-cp ../../buildboat/cluster-vae/result_mnist_ae/latent_ae_latest.png \
-./readme_images/latent_ae_latest.png
-cp ../../buildboat/cluster-vae/result_mnist_vae/latent_vae_latest.png \
-./readme_images/latent_vae_latest.png
-cp ../../buildboat/cluster-vae/result_mnist_clvae/latent_clvae_latest.png \
-./readme_images/latent_clvae_latest.png
-cp ../../buildboat/cluster-vae/result_mnist_clae/latent_clae_latest.png \
-./readme_images/latent_clae_latest.png
-
-### shapenet result
-cp ../../buildboat/cluster-vae/result_shapenet_clae/reconstruction_latest.png \
-./readme_images/shapenet_clae_recon.png
-cp ../../buildboat/cluster-vae/result_shapenet_clvae/reconstruction_latest.png \
-./readme_images/shapenet_clvae_recon.png
-cp ../../buildboat/cluster-vae/result_shapenet_vae/reconstruction_latest.png \
-./readme_images/shapenet_vae_recon.png
-cp ../../buildboat/cluster-vae/result_shapenet_ae/reconstruction_latest.png \
-./readme_images/shapenet_ae_recon.png
-
-### sita result
-cp ../../buildboat/cluster-vae/result_sita_clae/reconstruction_latest.png \
-./readme_images/sita_clae_recon.png
-cp ../../buildboat/cluster-vae/result_sita_clvae/reconstruction_latest.png \
-./readme_images/sita_clvae_recon.png
-cp ../../buildboat/cluster-vae/result_sita_vae/reconstruction_latest.png \
-./readme_images/sita_vae_recon.png
-cp ../../buildboat/cluster-vae/result_sita_ae/reconstruction_latest.png \
-./readme_images/sita_ae_recon.png
+## Move montage figures into a target folder, this is executed on server jhwl
+cd ~/Documents/yida/buildboat/cluster-vae
+for f in result_*
+do
+  echo $f
+  rsync -rR $f ../../gitfarm/cluster-vae/readme_images
+done
+cd ~/Documents/yida/gitfarm/cluster-vae
+find readme_images/result_* -name "*ckpt*" | xargs rm -rf
+find readme_images/result_* -name "*checkpoint*" | xargs rm -rf
 
 ## Resize all images in jpg and png to new size to fit on squared map
 ## with a small size
@@ -166,7 +80,7 @@ do
   rsync -rR $f ./logs
 done
 
-### Delete figures
+### Delete figures in buildboat folder
 for f in result_*
 do
   echo $f
