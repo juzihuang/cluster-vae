@@ -383,7 +383,8 @@ def train_vae(files,
     # is capable of encoding, though note that this is just
     # a random hyperplane within the latent space, and does not
     # encompass all possible embeddings.
-    zs = np.random.uniform(
+    rng = numpy.random.RandomState(1)
+    zs = rng.uniform(
         -1.0, 1.0, [4, n_code]).astype(np.float32)
     zs = utils.make_latent_manifold(zs, n_examples)
 
@@ -392,7 +393,7 @@ def train_vae(files,
 
     # We create a session to use the config = tf.ConfigProto()
     config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.3
+    config.gpu_options.per_process_gpu_memory_fraction = 0.25
     sess = tf.Session(config=config)
     saver = tf.train.Saver()
     sess.run(tf.global_variables_initializer())

@@ -43,7 +43,8 @@ def test_mnist(n_epochs=5000,
              clustered=clustered)
 
     n_examples = 8
-    zs = np.random.uniform(
+    rng = numpy.random.RandomState(1)
+    zs = rng.uniform(
         -1.0, 1.0, [4, n_code]).astype(np.float32)
     zs = utils.make_latent_manifold(zs, n_examples)
 
@@ -53,7 +54,7 @@ def test_mnist(n_epochs=5000,
 
     # We create a session to use the graph config = tf.ConfigProto()
     config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.3
+    config.gpu_options.per_process_gpu_memory_fraction = 0.25
     sess = tf.Session(config=config)
     sess.run(tf.global_variables_initializer())
     train_writer = tf.summary.FileWriter(output_path + '/logs', sess.graph)
