@@ -209,26 +209,26 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_ae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_ae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_ae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
-<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<p>Nebula space:</p>
 <table>
   <tr>
-    <th>Keans Clustered</th>
-    <th>Groudtruth</th>
+    <th>Scatters</th>
     <th>KDE</th>
     <th>Centers</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_ae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_ae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/latent_ae_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_ae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_ae/scatter_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_ae/latent_distribution_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_ae/centers_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -239,26 +239,26 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
-<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<p>Nebula space:</p>
 <table>
   <tr>
-    <th>Keans Clustered</th>
-    <th>Groudtruth</th>
+    <th>Scatters</th>
     <th>KDE</th>
     <th>Centers</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_clae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_clae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/latent_clae_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_clae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clae/scatter_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clae/latent_distribution_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clae/centers_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -269,26 +269,26 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_vae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_vae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_vae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
-<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<p>Nebula space:</p>
 <table>
   <tr>
-    <th>Keans Clustered</th>
-    <th>Groudtruth</th>
+    <th>Scatters</th>
     <th>KDE</th>
     <th>Centers</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_vae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_vae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/latent_vae_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_vae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_vae/scatter_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_vae/latent_distribution_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_vae/centers_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -299,26 +299,26 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clvae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clvae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clvae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
-<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
+<p>Nebula space:</p>
 <table>
   <tr>
-    <th>Keans Clustered</th>
-    <th>Groudtruth</th>
+    <th>Scatters</th>
     <th>KDE</th>
     <th>Centers</th>
   </tr>
   <tr>
-    <td><img src="readme_images/mnist_clvae_kmeans.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_clvae_scatter.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/latent_clvae_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/mnist_clvae_centers.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clvae/scatter_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clvae/latent_distribution_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_mnist_clvae/centers_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -330,10 +330,12 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/sita_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/sita_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_ae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_ae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_ae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -344,10 +346,12 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/sita_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/sita_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_clae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_clae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_clae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -358,10 +362,12 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/sita_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/sita_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_vae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_vae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_vae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -372,32 +378,16 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/sita_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/sita_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_clvae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_clvae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_sita_clvae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
 ### ShapeNet
-
-#### Latent space distribution
-
-<p>Validation data distribution for latent space, Kmeans clustered and groundtruth:</p>
-<table>
-  <tr>
-    <th>AE</th>
-    <th>Clustered AE</th>
-    <th>VAE</th>
-    <th>Clustered VAE</th>
-  </tr>
-  <tr>
-    <td><img src="readme_images/TensorBoard_shapenet_ae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
-    <td><img src="readme_images/TensorBoard_shapenet_clae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
-    <td><img src="readme_images/TensorBoard_shapenet_vae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
-    <td><img src="readme_images/TensorBoard_shapenet_clvae.jpg" alt="HTML tutorial" style="width:128px;border:0;"></td>
-  </tr>
-</table>
 
 #### AE
 
@@ -406,10 +396,12 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/shapenet_ae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/shapenet_ae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_ae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_ae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_ae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -418,8 +410,14 @@ cd ../
 <p>Samples for reconstruction and the reconstructed results:</p>
 <table>
   <tr>
-    <td><img src="readme_images/shapenet_clae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/shapenet_clae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <th>Original Samples</th>
+    <th>Reconstructed Samples</th>
+    <th>Manifold</th>
+  </tr>
+  <tr>
+    <td><img src="readme_images/result_shapenet_clae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_clae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_clae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -430,10 +428,12 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/shapenet_vae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/shapenet_vae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_vae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_vae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_vae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
 
@@ -444,9 +444,11 @@ cd ../
   <tr>
     <th>Original Samples</th>
     <th>Reconstructed Samples</th>
+    <th>Manifold</th>
   </tr>
   <tr>
-    <td><img src="readme_images/shapenet_clvae_test.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
-    <td><img src="readme_images/shapenet_clvae_recon.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_clvae/test_xs.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_clvae/reconstruction_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
+    <td><img src="readme_images/result_shapenet_clvae/manifold_latest.png" alt="HTML tutorial" style="width:256px;height:256px;border:0;"></td>
   </tr>
 </table>
